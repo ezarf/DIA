@@ -11,215 +11,171 @@
   --pink:#ec4899;
   --ease:cubic-bezier(.4,0,.2,1);
 }
-
 body{
   margin:0;
   font-family:ui-sans-serif,system-ui;
   background:#0b0612;
-  overflow:hidden;
   color:white;
+  overflow:hidden;
 }
 
 /* BACKGROUND */
 .bg{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:
     radial-gradient(40% 30% at 20% 20%, #3b1023, transparent),
     radial-gradient(40% 30% at 80% 30%, #1c0f1a, transparent),
     linear-gradient(180deg,#05010a,#120815);
-  animation:bg 20s ease-in-out infinite alternate;
   z-index:-10;
 }
-@keyframes bg{to{filter:hue-rotate(8deg)}}
 
-/* HEARTS */
-.heart{
+/* SCENE */
+.scene{
   position:fixed;
-  font-size:46px;
-  opacity:.08;
-  animation:float 18s linear infinite;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
   pointer-events:none;
+  transition:opacity .9s var(--ease), transform .9s var(--ease);
+  transform:translateY(20px);
 }
-@keyframes float{
-  from{transform:translateY(120vh) scale(.8)}
-  to{transform:translateY(-30vh) scale(1.4)}
+.scene.active{
+  opacity:1;
+  pointer-events:auto;
+  transform:none;
 }
 
 /* GLASS */
 .glass{
-  position:relative;
-  z-index:20;
   background:rgba(255,255,255,.12);
-  backdrop-filter:blur(30px);
-  border-radius:32px;
+  backdrop-filter:blur(28px);
+  border-radius:28px;
+  padding:2rem;
+  max-width:380px;
+  width:90%;
+  text-align:center;
   box-shadow:0 40px 120px rgba(0,0,0,.5);
 }
 
-/* ANIMATION */
-.fade{
-  opacity:0;
-  transform:translateY(18px);
-  animation:fade .9s var(--ease) forwards;
-}
-@keyframes fade{to{opacity:1;transform:none}}
-
-.scale{
-  opacity:0;
-  transform:scale(.94);
-  animation:scale .8s var(--ease) forwards;
-}
-@keyframes scale{to{opacity:1;transform:scale(1)}}
-
 /* BUTTON */
 .btn{
-  padding:14px 44px;
+  margin-top:2rem;
+  padding:14px 42px;
   border-radius:999px;
   font-weight:600;
+  background:var(--pink);
+  color:white;
   transition:transform .3s var(--ease);
 }
-.btn:active{transform:scale(.94)}
-.btn-yes{background:var(--pink);color:#fff}
-.btn-no{background:#6b7280;color:#fff;position:relative}
+.btn:active{transform:scale(.95)}
 </style>
 </head>
 
-<body class="flex items-center justify-center min-h-screen">
+<body>
 
 <div class="bg"></div>
 
-<!-- HEARTS -->
+<!-- PAGE 1 : OPENING -->
+<section class="scene active">
+  <div class="glass">
+    <h1 class="text-3xl font-bold text-pink-400 mb-4">
+      Hai R’syh
+    </h1>
+    <p class="text-gray-200 leading-relaxed">
+      Aku nggak tau kapan tepatnya,<br>
+      tapi sejak kenal kamu,<br>
+      hal-hal kecil jadi terasa lebih tenang.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 2 : NYERTAIN -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Kamu itu bukan yang datang<br>
+      bikin semuanya heboh.<br><br>
+      Tapi caramu hadir,<br>
+      bikin aku betah.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 3 : SALTING -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Lucunya…<br>
+      kamu nggak berusaha apa-apa.<br><br>
+      Tapi entah kenapa,<br>
+      aku nyaman.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 4 : BRUTAL -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Kalau suatu hari nanti<br>
+      kamu capek sama dunia,<br><br>
+      aku pengen jadi orang<br>
+      yang kamu cari tanpa sadar.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 5 : QUESTION -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-lg font-semibold text-gray-100 leading-relaxed">
+      Jadi…<br><br>
+      kalau aku minta kesempatan<br>
+      buat jagain kamu pelan-pelan,<br><br>
+      kamu mau?
+    </p>
+    <div class="flex justify-center gap-6 mt-8">
+      <button class="btn" onclick="yes()">Iya</button>
+      <button class="btn bg-gray-500" onclick="next()">Aku mikir dulu</button>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 6 : ENDING -->
+<section class="scene">
+  <div class="glass">
+    <p class="mb-4">Aku nggak nyari yang sempurna.</p>
+    <p class="mb-4">Aku cuma mau yang mau tumbuh bareng.</p>
+    <p class="font-medium mb-6">Dan hari ini, aku milih kamu.</p>
+
+    <a
+      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20mau%20jalanin%20ini%20pelan-pelan%2C%20tapi%20serius%20sama%20kamu%20%F0%9F%A4%8D"
+      class="btn inline-block"
+    >
+      Lanjut ke WhatsApp
+    </a>
+  </div>
+</section>
+
 <script>
-for(let i=0;i<18;i++){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerText="❤";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDelay=Math.random()*18+"s";
-  document.body.appendChild(h);
+const scenes=document.querySelectorAll('.scene');
+let index=0;
+
+function next(){
+  scenes[index].classList.remove('active');
+  index=Math.min(index+1,scenes.length-1);
+  scenes[index].classList.add('active');
 }
-</script>
 
-<!-- CARD -->
-<div id="card" class="glass p-8 max-w-sm w-full text-center scale">
-
-<h1 class="text-3xl font-bold text-pink-400 mb-4 fade"
- style="animation-delay:.2s">
- Hai R’syh
-</h1>
-
-<p id="story"
- class="text-gray-200 mb-6 min-h-[88px] transition-opacity duration-700"></p>
-
-<iframe id="spotify"
- loading="lazy"
- class="rounded-xl mb-6 opacity-100 transition"
- src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
- width="100%" height="80"
- allow="encrypted-media"></iframe>
-
-<p class="text-lg font-semibold text-gray-100 mb-6 fade"
- style="animation-delay:1s">
- Jadi… kalau aku minta kesempatan
- buat jagain kamu pelan-pelan,
- kamu mau?
-</p>
-
-<div class="flex justify-center gap-6 relative">
- <button id="yes" class="btn btn-yes">Iya</button>
- <button id="no" class="btn btn-no">Tidak</button>
-</div>
-
-<p id="hint"
- class="text-sm text-pink-300 mt-4 opacity-0 transition"></p>
-
-</div>
-
-<!-- ENDING -->
-<div id="ending"
- class="hidden fixed inset-0 flex items-center justify-center px-6">
- <div class="glass p-8 max-w-md text-center scale">
-  <p id="e1" class="mb-4"></p>
-  <p id="e2" class="mb-4"></p>
-  <p id="e3" class="mb-6 font-medium"></p>
-  <a id="wa" class="btn btn-yes opacity-0 transition">
-   Lanjut ke WhatsApp
-  </a>
- </div>
-</div>
-
-<script>
-const story=document.getElementById("story");
-const hint=document.getElementById("hint");
-const yes=document.getElementById("yes");
-const no=document.getElementById("no");
-const card=document.getElementById("card");
-const ending=document.getElementById("ending");
-
-const e1=document.getElementById("e1");
-const e2=document.getElementById("e2");
-const e3=document.getElementById("e3");
-const wa=document.getElementById("wa");
-
-/* TIMELINE */
-window.onload=()=>{
- setTimeout(()=>story.innerText=
- "Aku nggak tau kapan tepatnya, tapi sejak kenal kamu, dunia rasanya lebih pelan."
- ,3000);
-
- setTimeout(()=>story.innerText=
- "Kamu nggak berusaha bikin aku nyaman… tapi entah kenapa aku nyaman."
- ,9000);
-
- setTimeout(()=>story.innerText=
- "Kalau suatu hari kamu capek sama dunia, aku pengen jadi tempat kamu pulang."
- ,16000);
-};
-
-/* NO BUTTON */
-let chase=0,x=0,y=0;
-const lines=[
- "Hei…",
- "Kok kamu ngejar sih 😳",
- "Kalau gini terus aku salah tingkah…",
- "Yaudah… aku ngalah."
-];
-
-function evade(){
- chase++;
- hint.innerText=lines[Math.min(chase-1,3)];
- hint.style.opacity=1;
- x=Math.max(-80,Math.min(80,x+(Math.random()*90-45)));
- y=Math.max(-60,Math.min(60,y+(Math.random()*70-35)));
- no.style.transform=`translate(${x}px,${y}px)`;
- if(chase>=4){
-  no.innerText="Iya";
-  no.className="btn btn-yes";
- }
+function yes(){
+  next();
 }
-no.onclick=evade;
-no.ontouchstart=evade;
-
-/* YES */
-yes.onclick=()=>{
- card.classList.add("opacity-0");
- setTimeout(()=>{
-  card.classList.add("hidden");
-  ending.classList.remove("hidden");
-
-  setTimeout(()=>e1.innerText="Aku nggak nyari yang sempurna.",600);
-  setTimeout(()=>e2.innerText="Aku cuma mau yang mau tumbuh bareng.",2200);
-  setTimeout(()=>e3.innerText="Dan hari ini, aku milih kamu.",3800);
-
-  setTimeout(()=>{
-   wa.style.opacity=1;
-   wa.href="https://wa.me/6281994446111?text="+
-    encodeURIComponent(
-     "Aku jawab IYA. Aku mau jalanin ini pelan-pelan, tapi serius sama kamu 🤍"
-    );
-  },5200);
- },600);
-};
 </script>
 
 </body>
