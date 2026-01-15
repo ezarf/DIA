@@ -8,20 +8,31 @@
 <script src="https://www.youtube.com/iframe_api"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --soft:#f3e8ee;
-  --muted:#d1c4cc;
-  --dark:#0b0a0d;
+  --glass1: rgba(255,255,255,.22);
+  --glass2: rgba(255,255,255,.10);
+  --border: rgba(255,255,255,.28);
+  --text-soft:#f7f4f6;
 }
 body{
   margin:0;
   font-family:'Inter',system-ui;
-  background:linear-gradient(180deg,#0b0a0d,#141218);
-  color:#f5f5f5;
+  background:linear-gradient(180deg,#0e0c12,#1a1520);
+  color:var(--text-soft);
   overflow:hidden;
+}
+
+/* BACKGROUND */
+.bg{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(35% 25% at 20% 15%, #3b2032, transparent),
+    radial-gradient(35% 25% at 80% 30%, #2a1c3a, transparent),
+    linear-gradient(180deg,#0e0c12,#1a1520);
+  z-index:-1;
 }
 
 /* SCENE */
@@ -32,7 +43,7 @@ body{
   justify-content:center;
   opacity:0;
   pointer-events:none;
-  transform:translateY(20px);
+  transform:translateY(18px);
   transition:all .7s ease;
 }
 .scene.active{
@@ -41,16 +52,32 @@ body{
   transform:none;
 }
 
-/* CARD */
+/* GLASS CARD */
 .card{
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(24px);
-  border-radius:28px;
-  padding:2.2rem 2rem;
+  background:linear-gradient(135deg,var(--glass1),var(--glass2));
+  backdrop-filter:blur(26px);
+  border-radius:30px;
+  padding:2.4rem 2.2rem;
   max-width:420px;
   width:90%;
   text-align:center;
-  border:1px solid rgba(255,255,255,.12);
+  border:1px solid var(--border);
+}
+
+/* TEXT */
+.name{
+  font-size:2.4rem;
+  font-weight:700;
+  letter-spacing:.02em;
+  background:linear-gradient(135deg,#f5c2d6,#d8c7ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:.5rem;
+  animation:fadeUp 1s ease forwards;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:none}
 }
 
 /* BUTTON */
@@ -59,26 +86,14 @@ body{
   padding:13px 44px;
   border-radius:999px;
   font-weight:600;
-  background:#f5f5f5;
+  background:rgba(255,255,255,.9);
   color:#111;
   transition:.25s ease;
 }
 .btn:hover{transform:translateY(-2px)}
 .btn.secondary{
-  background:#2a2730;
-  color:#ccc;
-}
-
-/* NAME */
-.name{
-  font-size:2.4rem;
-  font-weight:700;
-  color:var(--soft);
-  animation:fadeUp 1s ease forwards;
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:none}
+  background:rgba(255,255,255,.18);
+  color:#eee;
 }
 
 /* PLAYER */
@@ -86,14 +101,15 @@ body{
   position:fixed;
   bottom:14px;left:50%;
   transform:translateX(-50%);
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(20px);
+  background:linear-gradient(135deg,var(--glass1),var(--glass2));
+  backdrop-filter:blur(22px);
   padding:8px 16px;
   border-radius:999px;
+  border:1px solid var(--border);
   display:flex;
-  gap:12px;
   align-items:center;
-  font-size:14px;
+  gap:12px;
+  font-size:13px;
 }
 
 /* RUNAWAY */
@@ -102,9 +118,10 @@ body{
 </head>
 
 <body>
+<div class="bg"></div>
 
-<!-- YouTube Player (Hidden) -->
-<div id="yt" style="width:0;height:0;overflow:hidden"></div>
+<!-- YouTube Player (Hidden but REAL) -->
+<div id="yt-player"></div>
 
 <div class="player">
   <span>🎵 Lover – Taylor Swift</span>
@@ -113,9 +130,9 @@ body{
 
 <section class="scene active">
   <div class="card">
-    <p class="mb-2">Hai</p>
+    <p class="mb-2 text-sm text-gray-300">Hai</p>
     <div class="name">R’syh</div>
-    <p class="mt-4 text-gray-300">Aku mau jujur lewat cara sederhana.</p>
+    <p class="mt-4 text-gray-300">Aku bikin ini dengan perasaan yang tenang.</p>
     <button class="btn" onclick="start()">Mulai</button>
   </div>
 </section>
@@ -124,7 +141,7 @@ body{
   <div class="card">
     <p class="leading-relaxed text-gray-300">
       Sejak kenal kamu,<br>
-      banyak hal kecil terasa lebih tenang.
+      banyak hal sederhana terasa lebih hangat.
     </p>
     <button class="btn" onclick="next()">Lanjut</button>
   </div>
@@ -143,12 +160,12 @@ body{
 <section class="scene">
   <div class="card">
     <p class="text-lg font-medium">
-      Jadi sekarang aku mau tanya…<br><br>
+      Jadi sekarang aku mau jujur…<br><br>
       Mau nggak kamu jadi pacar aku?
     </p>
     <div class="flex justify-center gap-6 mt-8">
       <button class="btn" onclick="yes()">Iya</button>
-      <button class="btn secondary runaway" onmouseenter="run(this)">Aku mikir dulu</button>
+      <button class="btn secondary runaway" onmouseenter="run(this)">gak mauuuu</button>
     </div>
   </div>
 </section>
@@ -162,27 +179,42 @@ body{
 
 <script>
 let player;
+let ytReady=false;
 let index=0;
 const scenes=document.querySelectorAll('.scene');
 
 function onYouTubeIframeAPIReady(){
-  player=new YT.Player('yt',{
-    height:'0',width:'0',
+  player=new YT.Player('yt-player',{
+    width:0,
+    height:0,
     videoId:'cYVnC9gH6Dk',
-    playerVars:{autoplay:0,controls:0,loop:1,playlist:'cYVnC9gH6Dk'}
+    playerVars:{
+      autoplay:0,
+      controls:0,
+      loop:1,
+      playlist:'cYVnC9gH6Dk'
+    },
+    events:{
+      onReady:()=>{ytReady=true}
+    }
   });
 }
 
 function start(){
-  if(player) player.playVideo();
+  if(ytReady){
+    player.playVideo();
+  } else {
+    const wait=setInterval(()=>{
+      if(ytReady){player.playVideo();clearInterval(wait)}
+    },100);
+  }
   next();
 }
 
 function toggleMusic(){
-  if(!player) return;
-  const state=player.getPlayerState();
-  if(state===1) player.pauseVideo();
-  else player.playVideo();
+  if(!ytReady) return;
+  const s=player.getPlayerState();
+  s===1?player.pauseVideo():player.playVideo();
 }
 
 function next(){
@@ -194,7 +226,7 @@ function next(){
 function yes(){next()}
 
 function run(btn){
-  btn.style.transform=`translate(${Math.random()*140-70}px,${Math.random()*100-50}px)`;
+  btn.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*90-45}px)`;
 }
 </script>
 </body>
