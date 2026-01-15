@@ -8,17 +8,17 @@
 
 <style>
 body{
-  background:linear-gradient(180deg,#fde2eb,#fff);
-  overflow:hidden;
+  background:linear-gradient(180deg,#fde7f0,#fff);
   font-family:ui-sans-serif;
+  overflow:hidden;
 }
 
 /* floating hearts */
 .heart{
   position:fixed;
   font-size:14px;
-  opacity:.35;
-  animation:float 12s linear infinite;
+  opacity:.25;
+  animation:float 14s linear infinite;
 }
 @keyframes float{
   from{transform:translateY(110vh)}
@@ -27,31 +27,33 @@ body{
 
 /* glass card */
 .glass{
-  background:rgba(255,255,255,.55);
-  backdrop-filter:blur(20px);
-  border-radius:24px;
-  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  background:rgba(255,255,255,.65);
+  backdrop-filter:blur(22px);
+  border-radius:28px;
+  box-shadow:0 30px 60px rgba(0,0,0,.12);
 }
 
-/* smooth */
-.fade{animation:fade .8s ease forwards}
+/* cinematic fade */
+.fade{
+  animation:fade .9s cubic-bezier(.4,0,.2,1) forwards;
+}
 @keyframes fade{
-  from{opacity:0;transform:translateY(20px)}
+  from{opacity:0;transform:translateY(24px)}
   to{opacity:1;transform:none}
 }
 
 /* buttons */
 .btn{
-  padding:14px 36px;
+  padding:14px 38px;
   border-radius:999px;
   font-weight:600;
-  transition:.3s;
+  transition:all .35s cubic-bezier(.4,0,.2,1);
 }
 .btn-yes{
   background:#ec4899;
   color:white;
 }
-.btn-yes:hover{transform:scale(1.07)}
+.btn-yes:hover{transform:scale(1.08)}
 .btn-no{
   background:#9ca3af;
   color:white;
@@ -63,12 +65,12 @@ body{
 
 <!-- floating hearts -->
 <script>
-for(let i=0;i<25;i++){
+for(let i=0;i<28;i++){
   const h=document.createElement("div");
   h.className="heart";
   h.innerText="❤";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDelay=Math.random()*12+"s";
+  h.style.animationDelay=Math.random()*14+"s";
   h.style.fontSize=10+Math.random()*18+"px";
   document.body.appendChild(h);
 }
@@ -84,10 +86,10 @@ for(let i=0;i<25;i++){
     Aku mau jujur dikit… kamu itu bikin aku nyaman.
   </p>
 
-  <!-- Spotify Lover -->
+  <!-- Spotify (auto play after first interaction) -->
   <iframe id="spotify"
     class="rounded-xl mb-6"
-    src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI?autoplay=1"
+    src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
     width="100%" height="80"
     allow="autoplay; encrypted-media">
   </iframe>
@@ -138,14 +140,24 @@ const l1=document.getElementById("l1");
 const l2=document.getElementById("l2");
 const l3=document.getElementById("l3");
 const wa=document.getElementById("wa");
+const spotify=document.getElementById("spotify");
 
 let chase=0;
+let played=false;
 
-/* tombol tidak kabur */
+/* auto play spotify after first interaction */
+document.body.addEventListener("click",()=>{
+  if(!played){
+    spotify.src=spotify.src+"?autoplay=1";
+    played=true;
+  }
+},{once:true});
+
+/* tombol tidak gemas */
 no.addEventListener("mouseenter",()=>{
   hint.style.opacity=1;
   no.style.transform=
-    `translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
+    `translate(${Math.random()*140-70}px,${Math.random()*90-45}px)`;
   chase++;
 
   if(chase===2) desc.innerText="Eh… kok kamu ngejar sih 😳";
@@ -156,12 +168,6 @@ no.addEventListener("mouseenter",()=>{
   }
 });
 
-/* autoplay spotify unlock */
-document.body.addEventListener("click",()=>{
-  const s=document.getElementById("spotify");
-  s.src=s.src;
-},{once:true});
-
 /* YES → cinematic ending */
 yes.onclick=()=>{
   card.classList.add("opacity-0");
@@ -169,13 +175,13 @@ yes.onclick=()=>{
     card.classList.add("hidden");
     ending.classList.remove("hidden");
     cinematic();
-  },600);
+  },700);
 };
 
 function cinematic(){
   setTimeout(()=>{l1.innerText="Aku nggak nyari hubungan yang sempurna."},600);
-  setTimeout(()=>{l2.innerText="Aku cuma mau yang dijalanin pelan, tapi serius."},1800);
-  setTimeout(()=>{l3.innerText="Kalau kamu mau, aku siap belajar bareng kamu."},3200);
+  setTimeout(()=>{l2.innerText="Aku cuma mau yang dijalanin pelan, tapi serius."},2000);
+  setTimeout(()=>{l3.innerText="Kalau kamu mau, aku siap belajar bareng kamu."},3600);
   setTimeout(()=>{
     wa.style.opacity=1;
     wa.href=
@@ -183,7 +189,7 @@ function cinematic(){
       encodeURIComponent(
         "Aku jawab IYA. Aku mau jalanin ini pelan-pelan tapi serius sama kamu."
       );
-  },4600);
+  },5200);
 }
 </script>
 
