@@ -18,8 +18,6 @@ body{
   color:white;
   overflow:hidden;
 }
-
-/* BACKGROUND */
 .bg{
   position:fixed;inset:0;
   background:
@@ -28,8 +26,6 @@ body{
     linear-gradient(180deg,#05010a,#120815);
   z-index:-10;
 }
-
-/* SCENE */
 .scene{
   position:fixed;
   inset:0;
@@ -46,8 +42,6 @@ body{
   pointer-events:auto;
   transform:none;
 }
-
-/* GLASS */
 .glass{
   background:rgba(255,255,255,.12);
   backdrop-filter:blur(28px);
@@ -58,8 +52,6 @@ body{
   text-align:center;
   box-shadow:0 40px 120px rgba(0,0,0,.5);
 }
-
-/* BUTTON */
 .btn{
   margin-top:2rem;
   padding:14px 42px;
@@ -78,20 +70,20 @@ body{
 
 <div class="bg"></div>
 
-<!-- YOUTUBE MUSIC -->
-<div id="yt-player" style="display:none;"></div>
-<script src="https://www.youtube.com/iframe_api"></script>
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://files.catbox.moe/6r3y6j.mp3" type="audio/mpeg">
+</audio>
 
 <!-- PAGE 1 -->
 <section class="scene active">
   <div class="glass">
     <h1 class="text-3xl font-bold text-pink-400 mb-4">Hai R’syh</h1>
     <p class="text-gray-200 leading-relaxed mb-6">
-      Di tengah tugas, kelas, dan jadwal kuliah<br>
-      yang kadang bikin capek,<br>
-      ada satu hal yang pengen aku sampein.
+      Ada sesuatu yang pengen aku sampein.<br>
+      Pelan-pelan… tapi jujur.
     </p>
-    <button class="btn" onclick="startStory()">Mulai</button>
+    <button class="btn" onclick="start()">Mulai</button>
   </div>
 </section>
 
@@ -99,11 +91,10 @@ body{
 <section class="scene">
   <div class="glass">
     <p class="leading-relaxed">
-      Kuliah itu nggak selalu ringan.<br>
-      Kadang deadline numpuk,<br>
-      kadang kepala penuh.<br><br>
-      Tapi entah kenapa,<br>
-      ngobrol sama kamu bikin aku lebih tenang.
+      Kamu itu bukan yang datang<br>
+      bikin semuanya heboh.<br><br>
+      Tapi caramu hadir,<br>
+      bikin aku betah.
     </p>
     <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
@@ -113,10 +104,10 @@ body{
 <section class="scene">
   <div class="glass">
     <p class="leading-relaxed">
-      Kamu nggak perlu ngelakuin hal besar.<br><br>
-      Cukup hadir,<br>
-      cukup jadi diri kamu sendiri.<br><br>
-      Dan itu udah cukup bikin aku nyaman.
+      Lucunya…<br>
+      kamu nggak berusaha apa-apa.<br><br>
+      Tapi entah kenapa,<br>
+      aku nyaman.
     </p>
     <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
@@ -126,10 +117,10 @@ body{
 <section class="scene">
   <div class="glass">
     <p class="leading-relaxed">
-      Kalau nanti kita sama-sama capek<br>
-      sama semester panjang ini,<br><br>
-      aku pengen kita saling jadi tempat pulang,<br>
-      walau cuma lewat cerita sederhana.
+      Kalau suatu hari nanti<br>
+      kamu capek sama dunia,<br><br>
+      aku pengen jadi orang<br>
+      yang kamu cari tanpa sadar.
     </p>
     <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
@@ -137,19 +128,14 @@ body{
 
 <!-- PAGE 5 : NEMBAK -->
 <section class="scene">
-  <div class="glass relative">
-    <p class="text-lg font-semibold leading-relaxed mb-4">
-      Jadi sekarang aku mau jujur.
-    </p>
-
+  <div class="glass">
     <p class="text-xl font-bold text-pink-300 mb-4">
       Mau nggak kamu<br>
       jadi pacar aku?
     </p>
 
     <p class="text-sm text-gray-300 mb-4">
-      *catatan: jangan dikejar tombol “tidak”,<br>
-      nanti aku malah makin gugup 😳
+      *jangan dikejar tombol “tidak” 😳
     </p>
 
     <div class="flex justify-center gap-6 mt-6 relative">
@@ -162,45 +148,35 @@ body{
 <!-- PAGE 6 -->
 <section class="scene">
   <div class="glass">
-    <p class="mb-2">
-      Aku nggak janji semuanya bakal selalu mudah.
-    </p>
-    <p class="mb-2">
-      Tapi aku mau belajar, tumbuh,
-      dan jalan bareng kamu.
-    </p>
-    <p class="font-medium mt-4">
-      Di kuliah ini — dan seterusnya.
-    </p>
+    <p class="mb-4">Aku nggak nyari yang sempurna.</p>
+    <p class="mb-4">Aku cuma mau yang mau tumbuh bareng.</p>
+    <p class="font-medium mb-6">Dan hari ini, aku milih kamu.</p>
+
+    <a
+      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20mau%20jadi%20pacar%20kamu%20dan%20jalanin%20ini%20pelan-pelan%20tapi%20serius%20%F0%9F%A4%8D"
+      target="_blank"
+      class="btn inline-block"
+    >
+      lanjut di sini yaaa
+    </a>
   </div>
 </section>
 
 <script>
 const scenes = document.querySelectorAll('.scene');
 let index = 0;
-let player;
-let ready = false;
+const music = document.getElementById('music');
 
-// SCENE CONTROL
+function start(){
+  music.play();
+  next();
+}
 function next(){
   scenes[index].classList.remove('active');
-  index = Math.min(index + 1, scenes.length - 1);
+  index++;
   scenes[index].classList.add('active');
 }
 function yes(){ next(); }
-
-// YOUTUBE
-function onYouTubeIframeAPIReady(){
-  player = new YT.Player('yt-player',{
-    videoId:'ZcNwsXG9OC0',
-    playerVars:{autoplay:0,controls:0,loop:1,playlist:'ZcNwsXG9OC0'},
-    events:{ onReady:()=>{ ready = true; } }
-  });
-}
-function startStory(){
-  if(ready) player.playVideo();
-  next();
-}
 
 // RUNAWAY BUTTON
 const noBtn = document.getElementById('noBtn');
