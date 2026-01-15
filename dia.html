@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Jawaban Untuk Kamu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+  background: radial-gradient(circle at top, #020617, #000);
+  overflow: hidden;
+}
+
+/* Neon grid background */
+.grid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(transparent 95%, rgba(0,255,255,.15) 100%),
+    linear-gradient(90deg, transparent 95%, rgba(255,0,255,.15) 100%);
+  background-size: 40px 40px;
+  animation: move 20s linear infinite;
+}
+
+@keyframes move {
+  from { background-position: 0 0; }
+  to { background-position: 400px 400px; }
+}
+
+.glass {
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.18);
+}
+
+.glow {
+  box-shadow: 0 0 35px rgba(236,72,153,.8);
+}
+
+.float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+.confetti {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  animation: fall 2.5s linear forwards;
+}
+
+@keyframes fall {
+  from { transform: translateY(-10vh) rotate(0); opacity:1 }
+  to { transform: translateY(110vh) rotate(720deg); opacity:0 }
+}
+</style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center text-white relative">
+
+<div class="grid"></div>
+
+<!-- CARD -->
+<div id="card" class="glass rounded-3xl p-10 text-center max-w-md w-full float z-10">
+  <h1 class="text-3xl font-bold mb-3">
+    Hai <span class="text-pink-400">R'syh Tasari</span>
+  </h1>
+
+  <p class="text-gray-300 mb-10">
+    Aku gak mau main-main. Jadi aku tanya sekali aja…
+  </p>
+
+  <p class="text-xl font-semibold mb-8">`
+    Kamu mau jadi pacar aku?
+  </p>
+
+  <div class="flex justify-center gap-6">
+    <button id="yes"
+      class="px-8 py-3 rounded-full bg-pink-500 font-semibold glow hover:scale-105 transition">
+      Iya
+    </button>
+
+    <button id="no"
+      class="px-8 py-3 rounded-full bg-slate-600 font-semibold transition relative">
+      Tidak
+    </button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="final"
+ class="hidden absolute inset-0 flex flex-col items-center justify-center text-center z-20">
+  <h2 class="text-4xl font-bold mb-4 text-pink-400">
+    Aku tau jawabannya 💖
+  </h2>
+  <p class="text-gray-300 max-w-md">
+    Mulai hari ini, aku bukan cuma janji.
+    Aku bakal buktiin, pelan-pelan, tapi serius.
+  </p>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2023/03/27/audio_4b7e2d09c0.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
+const card = document.getElementById("card");
+const final = document.getElementById("final");
+const music = document.getElementById("music");
+
+let stage = 0;
+
+no.addEventListener("click", () => {
+  if (stage === 0) {
+    // kabur dulu
+    no.style.transform =
+      `translate(${Math.random()*120-60}px, ${Math.random()*80-40}px)`;
+    stage++;
+  } else {
+    // berubah jadi iya
+    no.innerText = "Iya";
+    no.classList.remove("bg-slate-600");
+    no.classList.add("bg-pink-500","glow","scale-110");
+    music.play();
+    confetti(30);
+    stage++;
+  }
+});
+
+yes.addEventListener("click", finish);
+no.addEventListener("dblclick", finish);
+
+function finish() {
+  card.classList.add("opacity-0","scale-95");
+  setTimeout(()=>{
+    card.classList.add("hidden");
+    final.classList.remove("hidden");
+    confetti(50);
+  },500);
+}
+
+function confetti(n) {
+  for (let i=0;i<n;i++) {
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    c.style.animationDuration=1.8+Math.random()*1.5+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+</script>
+
+</body>
+</html>
