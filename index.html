@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Jawaban Untuk Kamu</title>
+<title>Untuk R’syh 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -10,50 +10,37 @@
 body {
   background: radial-gradient(circle at top, #020617, #000);
   overflow: hidden;
+  transition: background .6s;
 }
-
-/* Neon grid background */
+.day {
+  background: linear-gradient(135deg,#fde68a,#f472b6);
+}
 .grid {
-  position: absolute;
-  inset: 0;
+  position: fixed; inset: 0;
   background:
-    linear-gradient(transparent 95%, rgba(0,255,255,.15) 100%),
-    linear-gradient(90deg, transparent 95%, rgba(255,0,255,.15) 100%);
-  background-size: 40px 40px;
-  animation: move 20s linear infinite;
+    linear-gradient(transparent 96%, rgba(255,105,180,.12)),
+    linear-gradient(90deg, transparent 96%, rgba(0,255,255,.12));
+  background-size: 60px 60px;
+  animation: move 25s linear infinite;
 }
-
 @keyframes move {
   from { background-position: 0 0; }
-  to { background-position: 400px 400px; }
+  to { background-position: 600px 600px; }
 }
-
 .glass {
   background: rgba(255,255,255,.08);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(255,255,255,.18);
 }
-
-.glow {
-  box-shadow: 0 0 35px rgba(236,72,153,.8);
-}
-
-.float {
-  animation: float 5s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-16px); }
-}
-
+.glow { box-shadow: 0 0 35px rgba(236,72,153,.8); }
+.float { animation: float 6s ease-in-out infinite; }
+@keyframes float { 50% { transform: translateY(-16px); } }
+.pop { animation: pop .4s ease; }
+@keyframes pop { 50% { transform: scale(1.25); } }
 .confetti {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  animation: fall 2.5s linear forwards;
+  position: fixed; width: 6px; height: 6px;
+  animation: fall 3s linear forwards;
 }
-
 @keyframes fall {
   from { transform: translateY(-10vh) rotate(0); opacity:1 }
   to { transform: translateY(110vh) rotate(720deg); opacity:0 }
@@ -65,85 +52,144 @@ body {
 
 <div class="grid"></div>
 
+<!-- TOGGLE -->
+<button id="mode"
+ class="absolute top-4 right-4 px-4 py-2 rounded-full glass text-sm">
+ Mode ☀️ / 🌙
+</button>
+
+<!-- MINI GAME -->
+<div id="game"
+ class="glass rounded-3xl p-8 text-center max-w-md w-full z-10">
+  <h1 class="text-2xl font-bold mb-4">Mini Game 😆</h1>
+  <p class="text-gray-300 mb-6">
+    Klik hati ini 3 kali dulu ya…
+  </p>
+  <button id="heart"
+   class="text-5xl transition hover:scale-125">💖</button>
+</div>
+
 <!-- CARD -->
-<div id="card" class="glass rounded-3xl p-10 text-center max-w-md w-full float z-10">
+<div id="card"
+ class="hidden glass rounded-3xl p-8 text-center max-w-md w-full float z-10">
   <h1 class="text-3xl font-bold mb-3">
-    Hai <span class="text-pink-400">R'syh Tasari</span>
+    Hai <span class="text-pink-400">R’syh</span> 💕
   </h1>
 
-  <p class="text-gray-300 mb-10">
-    Aku gak mau main-main. Jadi aku tanya sekali aja…
+  <p id="text" class="text-gray-300 mb-5">
+    Setelah main bentar… aku mau jujur.
   </p>
 
-  <p class="text-xl font-semibold mb-8">`
+  <!-- Spotify Taylor Swift -->
+  <iframe
+    class="rounded-xl mb-6 mx-auto"
+    src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
+    width="100%" height="80"
+    allow="autoplay; encrypted-media">
+  </iframe>
+
+  <p class="text-xl font-semibold mb-6">
     Kamu mau jadi pacar aku?
   </p>
 
   <div class="flex justify-center gap-6">
     <button id="yes"
-      class="px-8 py-3 rounded-full bg-pink-500 font-semibold glow hover:scale-105 transition">
+      class="px-8 py-3 rounded-full bg-pink-500 glow hover:scale-110 transition">
       Iya
     </button>
 
     <button id="no"
-      class="px-8 py-3 rounded-full bg-slate-600 font-semibold transition relative">
+      class="px-8 py-3 rounded-full bg-slate-600 transition relative">
       Tidak
     </button>
   </div>
 </div>
 
-<!-- RESULT -->
+<!-- FINAL -->
 <div id="final"
- class="hidden absolute inset-0 flex flex-col items-center justify-center text-center z-20">
-  <h2 class="text-4xl font-bold mb-4 text-pink-400">
-    Aku tau jawabannya 💖
+ class="hidden absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-20">
+  <h2 class="text-4xl font-bold text-pink-400 mb-4">
+    Makasih ya… 💖
   </h2>
-  <p class="text-gray-300 max-w-md">
-    Mulai hari ini, aku bukan cuma janji.
-    Aku bakal buktiin, pelan-pelan, tapi serius.
+  <p class="text-gray-300 max-w-md mb-6">
+    Aku janji bukan cuma datang bawa rasa,
+    tapi juga usaha, perhatian, dan waktu.
   </p>
+
+  <!-- WhatsApp -->
+  <a id="wa"
+   class="px-6 py-3 rounded-full bg-green-500 text-white font-semibold hover:scale-105 transition">
+   Kirim Jawaban ke WhatsApp 💬
+  </a>
 </div>
 
-<!-- MUSIC -->
-<audio id="music" preload="auto">
-  <source src="https://cdn.pixabay.com/audio/2023/03/27/audio_4b7e2d09c0.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-const no = document.getElementById("no");
-const yes = document.getElementById("yes");
+const body = document.body;
+const mode = document.getElementById("mode");
+const heart = document.getElementById("heart");
+const game = document.getElementById("game");
 const card = document.getElementById("card");
 const final = document.getElementById("final");
-const music = document.getElementById("music");
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
+const text = document.getElementById("text");
+const wa = document.getElementById("wa");
 
-let stage = 0;
+let clickHeart = 0;
+let step = 0;
+let day = false;
 
-no.addEventListener("click", () => {
-  if (stage === 0) {
-    // kabur dulu
-    no.style.transform =
-      `translate(${Math.random()*120-60}px, ${Math.random()*80-40}px)`;
-    stage++;
-  } else {
-    // berubah jadi iya
-    no.innerText = "Iya";
-    no.classList.remove("bg-slate-600");
-    no.classList.add("bg-pink-500","glow","scale-110");
-    music.play();
-    confetti(30);
-    stage++;
+mode.onclick = () => {
+  day = !day;
+  body.classList.toggle("day");
+};
+
+heart.onclick = () => {
+  clickHeart++;
+  heart.classList.add("pop");
+  setTimeout(()=>heart.classList.remove("pop"),200);
+  if (clickHeart === 3) {
+    game.classList.add("hidden");
+    card.classList.remove("hidden");
   }
+};
+
+no.addEventListener("mouseenter", () => {
+  no.style.transform =
+    `translate(${Math.random()*140-70}px, ${Math.random()*90-45}px)`;
 });
 
-yes.addEventListener("click", finish);
-no.addEventListener("dblclick", finish);
+no.onclick = () => {
+  if (step === 0) {
+    text.innerText = "Eh kok kamu ngejar 😳";
+    step++;
+  } else if (step === 1) {
+    text.innerText = "Aku jadi salting tau…";
+    step++;
+  } else {
+    no.innerText = "Iya";
+    no.classList.add("bg-pink-500","glow","pop");
+    confetti(25);
+  }
+};
+
+yes.onclick = finish;
+no.ondblclick = finish;
 
 function finish() {
   card.classList.add("opacity-0","scale-95");
   setTimeout(()=>{
     card.classList.add("hidden");
     final.classList.remove("hidden");
-    confetti(50);
+    confetti(60);
+
+    const msg =
+      "Aku jawab IYA 💖\n" +
+      "Aku mau jadi pacar kamu.\n\n" +
+      "— R’syh";
+    wa.href =
+      "https://wa.me/6281994446111?text=" +
+      encodeURIComponent(msg);
   },500);
 }
 
@@ -153,9 +199,8 @@ function confetti(n) {
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
     c.style.background=`hsl(${Math.random()*360},100%,70%)`;
-    c.style.animationDuration=1.8+Math.random()*1.5+"s";
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+    setTimeout(()=>c.remove(),3500);
   }
 }
 </script>
