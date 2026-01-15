@@ -107,7 +107,8 @@ body{
   height="80"
   frameborder="0"
   allow="encrypted-media"
-  class="mx-auto rounded-xl hidden">
+  class="mx-auto rounded-xl mt-4"
+  style="pointer-events:auto; z-index:10;">
 </iframe>
 
 <!-- PAGE 1 -->
@@ -121,7 +122,7 @@ body{
 
     <div class="music-box">
       <p class="text-sm text-gray-500 mb-2">Putar lagu dulu ya</p>
-      <button class="music-btn" onclick="playMusic()">▶ Play Lover — Taylor Swift</button>
+      <button class="music-btn" onclick="playMusic()">⬆️ Tap Play di Spotify Player</button>
     </div>
 
     <button class="btn" onclick="next()">Lanjut</button>
@@ -168,9 +169,11 @@ body{
 <section class="page">
   <div class="card">
     <p class="leading-relaxed italic">
-      Aku ingin kita jalan pelan tapi pasti ,<br>
-      dan selalu belajar untuk setia<br>
-      ILOVEU.
+      Aku bakal setia sama kamu.<br>
+      Kita belajar bersama-sama<br>
+      tentang apa itu cinta.<br><br>
+      Dan aku harap perjalanan kita
+      akan mulus dan bahagia.
     </p>
     <button class="btn" onclick="next()">Lanjut</button>
   </div>
@@ -184,13 +187,13 @@ body{
       kalau suatu hari kamu mau berjalan
       pelan-pelan,
     </p>
-    <p class="mb-6">bolehkah aku jalan di sebelahmu?</p>
+    <p class="mb-6">kamu mau nggak jadi pacar aku?</p>
 
     <div class="flex justify-center gap-6">
       <button class="btn" onclick="next()">Iya</button>
       <button id="no" class="btn secondary">Tidak</button>
     </div>
-    <div id="note" class="note">Hey, kamu jangan ngejar tidak mulu dong, aku jadi salting.</div>
+    <div id="note" class="note">Hey, kamu jangan mencet tidak mulu dong, aku jadi salting.</div>
   </div>
 </section>
 
@@ -200,7 +203,7 @@ body{
     <p class="mb-4">Terima kasih sudah sampai sejauh ini.</p>
     <p class="mb-8">Jawaban kamu, apa pun itu, tetap aku hargai.</p>
     <a href="https://wa.me/6281994446111?text=Aku%20udah%20baca%20semuanya.%20Kita%20boleh%20ngobrol%20pelan-pelan." class="btn inline-block">
-      Lanjut ke sini yaa
+      Lanjut ke sini yaaaaa
     </a>
   </div>
 </section>
@@ -220,11 +223,8 @@ function next(){
 }
 
 function playMusic(){
-  // Spotify TIDAK mengizinkan autoplay suara penuh via iframe.
-  // Solusi paling stabil: tampilkan player dan biarkan user tekan play.
-  spotify.classList.remove('hidden');
-  document.querySelector('.music-btn').innerText = 'Tap Play di atas ya';
-  document.querySelector('.music-btn').disabled = true;
+  // Fokus ke player supaya bisa langsung dipencet
+  spotify.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
 no.onclick=()=>{
