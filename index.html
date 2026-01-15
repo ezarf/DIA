@@ -68,6 +68,7 @@ body{
   background:var(--pink);
   color:white;
   transition:transform .3s var(--ease);
+  position:relative;
 }
 .btn:active{transform:scale(.95)}
 </style>
@@ -77,31 +78,27 @@ body{
 
 <div class="bg"></div>
 
-<!-- YOUTUBE MUSIC (HIDDEN) -->
+<!-- YOUTUBE MUSIC -->
 <div id="yt-player" style="display:none;"></div>
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <!-- PAGE 1 -->
 <section class="scene active">
   <div class="glass">
-    <h1 class="text-3xl font-bold text-pink-400 mb-4">
-      Hai R’syh
-    </h1>
-    <p class="text-gray-200 leading-relaxed">
-      Aku nggak tau kapan tepatnya,<br>
-      tapi sejak kenal kamu,<br>
-      hal-hal kecil jadi terasa lebih tenang.
+    <h1 class="text-3xl font-bold text-pink-400 mb-4">Hai R’syh</h1>
+    <p class="text-gray-200 leading-relaxed mb-6">
+      Ada sesuatu yang pengen aku sampein.<br>
+      Pelan-pelan… tapi jujur.
     </p>
-    <button class="btn" onclick="startStory()">Lanjutkan</button>
+    <button class="btn" onclick="startStory()">Mulai</button>
   </div>
 </section>
 
 <!-- PAGE 2 -->
 <section class="scene">
   <div class="glass">
-    <p class="text-gray-200 leading-relaxed">
-      Kamu itu bukan yang datang<br>
-      bikin semuanya heboh.<br><br>
+    <p class="leading-relaxed">
+      Kamu itu bukan yang datang bikin heboh.<br><br>
       Tapi caramu hadir,<br>
       bikin aku betah.
     </p>
@@ -112,7 +109,7 @@ body{
 <!-- PAGE 3 -->
 <section class="scene">
   <div class="glass">
-    <p class="text-gray-200 leading-relaxed">
+    <p class="leading-relaxed">
       Lucunya…<br>
       kamu nggak berusaha apa-apa.<br><br>
       Tapi entah kenapa,<br>
@@ -125,9 +122,8 @@ body{
 <!-- PAGE 4 -->
 <section class="scene">
   <div class="glass">
-    <p class="text-gray-200 leading-relaxed">
-      Kalau suatu hari nanti<br>
-      kamu capek sama dunia,<br><br>
+    <p class="leading-relaxed">
+      Kalau suatu hari kamu capek sama dunia,<br><br>
       aku pengen jadi orang<br>
       yang kamu cari tanpa sadar.
     </p>
@@ -135,18 +131,26 @@ body{
   </div>
 </section>
 
-<!-- PAGE 5 -->
+<!-- PAGE 5 : NEMBAK -->
 <section class="scene">
-  <div class="glass">
-    <p class="text-lg font-semibold text-gray-100 leading-relaxed">
-      Jadi…<br><br>
-      kalau aku minta kesempatan<br>
-      buat jagain kamu pelan-pelan,<br><br>
-      kamu mau?
+  <div class="glass relative">
+    <p class="text-lg font-semibold leading-relaxed mb-4">
+      Jadi sekarang aku mau jujur.
     </p>
-    <div class="flex justify-center gap-6 mt-8">
+
+    <p class="text-xl font-bold text-pink-300 mb-4">
+      Mau nggak kamu<br>
+      jadi pacar aku?
+    </p>
+
+    <p class="text-sm text-gray-300 mb-4">
+      *catatan: jangan dikejar tombol “tidak”,<br>
+      nanti aku makin salting 😳
+    </p>
+
+    <div class="flex justify-center gap-6 mt-6 relative">
       <button class="btn" onclick="yes()">Iya</button>
-      <button class="btn bg-gray-500" onclick="next()">enggak</button>
+      <button id="noBtn" class="btn bg-gray-500">Tidak</button>
     </div>
   </div>
 </section>
@@ -154,16 +158,9 @@ body{
 <!-- PAGE 6 -->
 <section class="scene">
   <div class="glass">
-    <p class="mb-4">Aku nggak nyari yang sempurna.</p>
-    <p class="mb-4">Aku cuma mau yang mau tumbuh bareng.</p>
-    <p class="font-medium mb-6">Dan hari ini, aku milih kamu.</p>
-
-    <a
-      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20mau%20jalanin%20ini%20pelan-pelan%2C%20tapi%20serius%20sama%20kamu%20%F0%9F%A4%8D"
-      class="btn inline-block"
-    >
-      Lanjut ke siniiii
-    </a>
+    <p class="mb-2">Aku nggak nyari yang sempurna.</p>
+    <p class="mb-2">Aku cuma mau yang mau tumbuh bareng.</p>
+    <p class="font-medium mt-4">Dan hari ini, aku milih kamu.</p>
   </div>
 </section>
 
@@ -171,9 +168,9 @@ body{
 const scenes = document.querySelectorAll('.scene');
 let index = 0;
 let player;
-let musicStarted = false;
+let ready = false;
 
-// Scene control
+// SCENE CONTROL
 function next(){
   scenes[index].classList.remove('active');
   index = Math.min(index + 1, scenes.length - 1);
@@ -181,27 +178,26 @@ function next(){
 }
 function yes(){ next(); }
 
-// YouTube API
+// YOUTUBE
 function onYouTubeIframeAPIReady(){
-  player = new YT.Player('yt-player', {
-    videoId: 'ZcNwsXG9OC0', // Taylor Swift - Lover
-    playerVars:{
-      autoplay:0,
-      controls:0,
-      loop:1,
-      playlist:'ZcNwsXG9OC0'
-    }
+  player = new YT.Player('yt-player',{
+    videoId:'ZcNwsXG9OC0', // Taylor Swift - Lover
+    playerVars:{autoplay:0,controls:0,loop:1,playlist:'ZcNwsXG9OC0'},
+    events:{ onReady:()=>{ ready = true; } }
   });
 }
-
-// Start story + music
 function startStory(){
-  if(player && !musicStarted){
-    player.playVideo();
-    musicStarted = true;
-  }
+  if(ready) player.playVideo();
   next();
 }
+
+// RUNAWAY BUTTON
+const noBtn = document.getElementById('noBtn');
+noBtn.addEventListener('mouseenter', ()=>{
+  const x = Math.random()*240 - 120;
+  const y = Math.random()*160 - 80;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
 </script>
 
 </body>
