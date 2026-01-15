@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>Untuk R’syh</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://www.youtube.com/iframe_api"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --glass1: rgba(255,255,255,.22);
-  --glass2: rgba(255,255,255,.10);
-  --border: rgba(255,255,255,.28);
-  --text-soft:#f7f4f6;
+  --pink:#ec4899;
+  --ease:cubic-bezier(.4,0,.2,1);
 }
 body{
   margin:0;
-  font-family:'Inter',system-ui;
-  background:linear-gradient(180deg,#0e0c12,#1a1520);
-  color:var(--text-soft);
+  font-family:ui-sans-serif,system-ui;
+  background:#0b0612;
+  color:white;
   overflow:hidden;
 }
 
@@ -29,22 +23,23 @@ body{
 .bg{
   position:fixed;inset:0;
   background:
-    radial-gradient(35% 25% at 20% 15%, #3b2032, transparent),
-    radial-gradient(35% 25% at 80% 30%, #2a1c3a, transparent),
-    linear-gradient(180deg,#0e0c12,#1a1520);
-  z-index:-1;
+    radial-gradient(40% 30% at 20% 20%, #3b1023, transparent),
+    radial-gradient(40% 30% at 80% 30%, #1c0f1a, transparent),
+    linear-gradient(180deg,#05010a,#120815);
+  z-index:-10;
 }
 
 /* SCENE */
 .scene{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   opacity:0;
   pointer-events:none;
-  transform:translateY(18px);
-  transition:all .7s ease;
+  transition:opacity .9s var(--ease), transform .9s var(--ease);
+  transform:translateY(20px);
 }
 .scene.active{
   opacity:1;
@@ -52,182 +47,162 @@ body{
   transform:none;
 }
 
-/* GLASS CARD */
-.card{
-  background:linear-gradient(135deg,var(--glass1),var(--glass2));
-  backdrop-filter:blur(26px);
-  border-radius:30px;
-  padding:2.4rem 2.2rem;
-  max-width:420px;
+/* GLASS */
+.glass{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(28px);
+  border-radius:28px;
+  padding:2rem;
+  max-width:380px;
   width:90%;
   text-align:center;
-  border:1px solid var(--border);
-}
-
-/* TEXT */
-.name{
-  font-size:2.4rem;
-  font-weight:700;
-  letter-spacing:.02em;
-  background:linear-gradient(135deg,#f5c2d6,#d8c7ff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:.5rem;
-  animation:fadeUp 1s ease forwards;
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(16px)}
-  to{opacity:1;transform:none}
+  box-shadow:0 40px 120px rgba(0,0,0,.5);
 }
 
 /* BUTTON */
 .btn{
   margin-top:2rem;
-  padding:13px 44px;
+  padding:14px 42px;
   border-radius:999px;
   font-weight:600;
-  background:rgba(255,255,255,.9);
-  color:#111;
-  transition:.25s ease;
+  background:var(--pink);
+  color:white;
+  transition:transform .3s var(--ease);
 }
-.btn:hover{transform:translateY(-2px)}
-.btn.secondary{
-  background:rgba(255,255,255,.18);
-  color:#eee;
-}
-
-/* PLAYER */
-.player{
-  position:fixed;
-  bottom:14px;left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(135deg,var(--glass1),var(--glass2));
-  backdrop-filter:blur(22px);
-  padding:8px 16px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-size:13px;
-}
-
-/* RUNAWAY */
-.runaway{position:relative}
+.btn:active{transform:scale(.95)}
 </style>
 </head>
 
 <body>
+
 <div class="bg"></div>
 
-<!-- YouTube Player (Hidden but REAL) -->
-<div id="yt-player"></div>
+<!-- YOUTUBE MUSIC (HIDDEN) -->
+<div id="yt-player" style="display:none;"></div>
+<script src="https://www.youtube.com/iframe_api"></script>
 
-<div class="player">
-  <span>🎵 Lover – Taylor Swift</span>
-  <button onclick="toggleMusic()">Play / Pause</button>
-</div>
-
+<!-- PAGE 1 -->
 <section class="scene active">
-  <div class="card">
-    <p class="mb-2 text-sm text-gray-300">Hai</p>
-    <div class="name">R’syh</div>
-    <p class="mt-4 text-gray-300">Aku bikin ini dengan perasaan yang tenang.</p>
-    <button class="btn" onclick="start()">Mulai</button>
-  </div>
-</section>
-
-<section class="scene">
-  <div class="card">
-    <p class="leading-relaxed text-gray-300">
-      Sejak kenal kamu,<br>
-      banyak hal sederhana terasa lebih hangat.
+  <div class="glass">
+    <h1 class="text-3xl font-bold text-pink-400 mb-4">
+      Hai R’syh
+    </h1>
+    <p class="text-gray-200 leading-relaxed">
+      Aku nggak tau kapan tepatnya,<br>
+      tapi sejak kenal kamu,<br>
+      hal-hal kecil jadi terasa lebih tenang.
     </p>
-    <button class="btn" onclick="next()">Lanjut</button>
+    <button class="btn" onclick="startStory()">Lanjutkan</button>
   </div>
 </section>
 
+<!-- PAGE 2 -->
 <section class="scene">
-  <div class="card">
-    <p class="leading-relaxed text-gray-300">
-      Kamu nggak berisik,<br>
-      tapi selalu kerasa.
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Kamu itu bukan yang datang<br>
+      bikin semuanya heboh.<br><br>
+      Tapi caramu hadir,<br>
+      bikin aku betah.
     </p>
-    <button class="btn" onclick="next()">Lanjut</button>
+    <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
 </section>
 
+<!-- PAGE 3 -->
 <section class="scene">
-  <div class="card">
-    <p class="text-lg font-medium">
-      Jadi sekarang aku mau jujur…<br><br>
-      Mau nggak kamu jadi pacar aku?
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Lucunya…<br>
+      kamu nggak berusaha apa-apa.<br><br>
+      Tapi entah kenapa,<br>
+      aku nyaman.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 4 -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Kalau suatu hari nanti<br>
+      kamu capek sama dunia,<br><br>
+      aku pengen jadi orang<br>
+      yang kamu cari tanpa sadar.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 5 -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-lg font-semibold text-gray-100 leading-relaxed">
+      Jadi…<br><br>
+      kalau aku minta kesempatan<br>
+      buat jagain kamu pelan-pelan,<br><br>
+      kamu mau?
     </p>
     <div class="flex justify-center gap-6 mt-8">
       <button class="btn" onclick="yes()">Iya</button>
-      <button class="btn secondary runaway" onmouseenter="run(this)">gak mauuuu</button>
+      <button class="btn bg-gray-500" onclick="next()">enggak</button>
     </div>
   </div>
 </section>
 
+<!-- PAGE 6 -->
 <section class="scene">
-  <div class="card" style="animation:pulse 1.6s infinite">
-    <p class="mb-3">Makasih ya…</p>
-    <p class="text-gray-300">Aku bakal jaga perasaan ini.</p>
+  <div class="glass">
+    <p class="mb-4">Aku nggak nyari yang sempurna.</p>
+    <p class="mb-4">Aku cuma mau yang mau tumbuh bareng.</p>
+    <p class="font-medium mb-6">Dan hari ini, aku milih kamu.</p>
+
+    <a
+      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20mau%20jalanin%20ini%20pelan-pelan%2C%20tapi%20serius%20sama%20kamu%20%F0%9F%A4%8D"
+      class="btn inline-block"
+    >
+      Lanjut ke siniiii
+    </a>
   </div>
 </section>
 
 <script>
+const scenes = document.querySelectorAll('.scene');
+let index = 0;
 let player;
-let ytReady=false;
-let index=0;
-const scenes=document.querySelectorAll('.scene');
+let musicStarted = false;
 
+// Scene control
+function next(){
+  scenes[index].classList.remove('active');
+  index = Math.min(index + 1, scenes.length - 1);
+  scenes[index].classList.add('active');
+}
+function yes(){ next(); }
+
+// YouTube API
 function onYouTubeIframeAPIReady(){
-  player=new YT.Player('yt-player',{
-    width:0,
-    height:0,
-    videoId:'cYVnC9gH6Dk',
+  player = new YT.Player('yt-player', {
+    videoId: 'ZcNwsXG9OC0', // Taylor Swift - Lover
     playerVars:{
       autoplay:0,
       controls:0,
       loop:1,
-      playlist:'cYVnC9gH6Dk'
-    },
-    events:{
-      onReady:()=>{ytReady=true}
+      playlist:'ZcNwsXG9OC0'
     }
   });
 }
 
-function start(){
-  if(ytReady){
+// Start story + music
+function startStory(){
+  if(player && !musicStarted){
     player.playVideo();
-  } else {
-    const wait=setInterval(()=>{
-      if(ytReady){player.playVideo();clearInterval(wait)}
-    },100);
+    musicStarted = true;
   }
   next();
 }
-
-function toggleMusic(){
-  if(!ytReady) return;
-  const s=player.getPlayerState();
-  s===1?player.pauseVideo():player.playVideo();
-}
-
-function next(){
-  scenes[index].classList.remove('active');
-  index=Math.min(index+1,scenes.length-1);
-  scenes[index].classList.add('active');
-}
-
-function yes(){next()}
-
-function run(btn){
-  btn.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*90-45}px)`;
-}
 </script>
+
 </body>
 </html>
