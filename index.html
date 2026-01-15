@@ -8,59 +8,89 @@
 
 <style>
 body{
-  background: radial-gradient(circle at top,#ff9ad5,#0f172a);
+  margin:0;
+  min-height:100vh;
+  background: radial-gradient(circle at top, #ffb6dc 0%, #1e293b 70%);
   overflow:hidden;
-  font-family:'Poppins',sans-serif;
+  font-family:'Poppins',system-ui;
 }
+
+/* GLASS CARD */
 .glass{
   background:rgba(255,255,255,.18);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(22px);
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
-.float{animation:float 6s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-15px)}}
-.fade{animation:fade .8s ease forwards}
-@keyframes fade{from{opacity:0;transform:scale(.9)}to{opacity:1}}
-.heart-bg{
+
+/* SMOOTH FADE + MOVE */
+.fade-up{
+  animation:fadeUp .9s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* FLOAT CARD */
+.float{
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{
+  50%{transform:translateY(-12px)}
+}
+
+/* HEART BACKGROUND */
+.heart{
   position:fixed;
-  font-size:22px;
-  animation:up linear forwards;
+  bottom:-40px;
+  font-size:24px;
+  animation:rise linear forwards;
+  pointer-events:none;
 }
-@keyframes up{
-  from{transform:translateY(100vh);opacity:1}
-  to{transform:translateY(-10vh);opacity:0}
+@keyframes rise{
+  from{transform:translateY(0) scale(.8);opacity:1}
+  to{transform:translateY(-120vh) scale(1.6);opacity:0}
+}
+
+/* LOVE BUTTON */
+#loveBtn{
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{
+  50%{transform:scale(1.15)}
 }
 </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center text-white relative">
+<body class="flex items-center justify-center text-white">
 
-<!-- MINI GAME -->
-<div id="game" class="glass p-8 rounded-3xl text-center max-w-md fade">
+<!-- AUDIO (AUTOPLAY SETELAH INTERAKSI) -->
+<audio id="song" loop>
+  <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/5f/63/6a/5f636a7c-6d8c-98a4-6c61-60cfae5ad08c/mzaf_12033525213613426643.plus.aac.p.m4a">
+</audio>
+
+<!-- STEP 1 -->
+<div id="step1" class="glass rounded-3xl px-8 py-10 text-center w-[90%] max-w-md fade-up">
   <h1 class="text-2xl font-bold mb-3">Hai R’syh 💕</h1>
-  <p class="mb-4 text-gray-200">
-    Tangkap 💖 ini 3x ya…<br>
-    jangan curang 😆
+  <p class="text-pink-100 mb-6">
+    Klik love ini <b>3 kali</b> ya…
   </p>
-  <button id="love"
-   class="text-6xl absolute hover:scale-125 transition">
-   💖
-  </button>
+  <button id="loveBtn" class="text-7xl select-none">💗</button>
 </div>
 
-<!-- MAIN CARD -->
-<div id="card" class="hidden glass p-8 rounded-3xl text-center max-w-md float fade">
-  <h2 class="text-3xl font-bold mb-2">R’syh 💗</h2>
-  <p class="text-gray-200 mb-5">
-    Aku mungkin nggak sempurna,  
-    tapi aku tulus dan mau berjuang sama kamu.
+<!-- STEP 2 -->
+<div id="step2"
+ class="hidden glass rounded-3xl px-8 py-10 text-center w-[90%] max-w-md fade-up float">
+
+  <h2 class="text-3xl font-bold mb-2">R’syh 💖</h2>
+  <p class="text-pink-100 mb-6 leading-relaxed">
+    Aku mungkin bukan yang paling sempurna,
+    tapi aku tulus, lembut,
+    dan mau berjuang sama kamu.
   </p>
 
-  <audio id="song" loop>
-    <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/7c/cc/da/7cccda65-4f48-02f6-b5c5-4c5c0c62d1c4/mzaf_13477030107353011256.plus.aac.p.m4a">
-  </audio>
-
-  <p class="text-xl font-semibold mb-4">
+  <p class="text-xl font-semibold mb-6">
     Kamu mau jadi pacar aku?
   </p>
 
@@ -71,128 +101,94 @@ body{
     </button>
 
     <button id="no"
-     class="px-8 py-3 rounded-full bg-slate-600 relative">
+     class="px-8 py-3 rounded-full bg-slate-600 transition">
      Tidak
     </button>
   </div>
 
-  <p id="saltingText"
-   class="mt-4 text-pink-200 text-sm opacity-0 transition">
+  <p id="salting"
+   class="mt-4 text-sm text-pink-200 opacity-0 transition">
    Kalau kamu ngejar-ngejar tombol “Tidak” ini,
-   aku jadi salting 😳💗
-  </p>
-</div>
-
-<!-- SECRET -->
-<div id="secret"
- class="hidden glass p-8 rounded-3xl text-center max-w-md fade">
-  <h3 class="text-2xl font-bold text-pink-300 mb-3">
-    Pesan Rahasia 💌
-  </h3>
-  <p class="text-gray-200">
-    Aku nggak mau cuma jadi singgah.  
-    Aku mau jadi rumah.  
-    Aku janji jaga perasaan kamu.
+   aku jadi salting 😳
   </p>
 </div>
 
 <!-- FINAL -->
 <div id="final"
- class="hidden absolute inset-0 flex flex-col items-center justify-center text-center px-6 fade">
+ class="hidden absolute inset-0 flex flex-col items-center justify-center text-center px-6 fade-up">
   <h2 class="text-4xl font-bold text-pink-300 mb-4">
     Aku bahagia banget 💖
   </h2>
-  <p class="mb-6 text-gray-200 max-w-md">
-    Mulai hari ini…  
-    aku janji nggak main-main sama perasaan kamu.
+  <p class="text-pink-100 max-w-md mb-6">
+    Aku janji bukan cuma ngomong,
+    tapi buktiin dan jaga perasaan kamu.
   </p>
   <a id="wa"
-   class="px-6 py-3 rounded-full bg-green-500 font-semibold hover:scale-105 transition">
+   class="px-7 py-3 rounded-full bg-green-500 font-semibold hover:scale-105 transition">
    Kirim ke WhatsApp 💬
   </a>
 </div>
 
 <script>
-const love=document.getElementById("love");
-const game=document.getElementById("game");
-const card=document.getElementById("card");
-const song=document.getElementById("song");
-const yes=document.getElementById("yes");
-const no=document.getElementById("no");
-const secret=document.getElementById("secret");
+const step1=document.getElementById("step1");
+const step2=document.getElementById("step2");
 const final=document.getElementById("final");
+const loveBtn=document.getElementById("loveBtn");
+const song=document.getElementById("song");
+const no=document.getElementById("no");
+const yes=document.getElementById("yes");
+const salting=document.getElementById("salting");
 const wa=document.getElementById("wa");
-const saltingText=document.getElementById("saltingText");
 
-let score=0;
-let kaburLevel=0;
+let click=0;
+let kabur=0;
 
-// MINI GAME
-moveLove();
-love.onclick=()=>{
-  score++;
-  if(score>=3){
-    game.classList.add("hidden");
-    card.classList.remove("hidden");
-    song.play();
+/* LOVE CLICK */
+loveBtn.onclick=()=>{
+  click++;
+  if(click>=3){
+    step1.classList.add("hidden");
+    step2.classList.remove("hidden");
+    song.play(); // AUTOPLAY AMAN
     hearts();
-  }else moveLove();
+  }
 };
-function moveLove(){
-  love.style.left=Math.random()*70+"%";
-  love.style.top=Math.random()*70+"%";
-}
 
-// TOMBOL TIDAK KABUR
-function kabur(){
-  kaburLevel++;
-  saltingText.style.opacity=1;
-
-  const x=Math.random()*(180+kaburLevel*20)-90;
-  const y=Math.random()*(120+kaburLevel*15)-60;
-
-  no.style.transition="transform .2s ease";
-  no.style.transform=`translate(${x}px,${y}px) rotate(${kaburLevel*6}deg)`;
-
-  if(kaburLevel>=5){
+/* NO BUTTON KABUR */
+function kaburBtn(){
+  kabur++;
+  salting.style.opacity=1;
+  const x=Math.random()*220-110;
+  const y=Math.random()*120-60;
+  no.style.transform=`translate(${x}px,${y}px) rotate(${kabur*6}deg)`;
+  if(kabur>=5){
     no.innerText="Iya 😳";
-    no.classList.remove("bg-slate-600");
-    no.classList.add("bg-pink-500");
+    no.classList.replace("bg-slate-600","bg-pink-500");
   }
 }
-no.addEventListener("mouseenter",kabur);
-no.addEventListener("click",kabur);
+no.addEventListener("mouseenter",kaburBtn);
+no.addEventListener("click",kaburBtn);
 
-// YES FLOW
+/* YES */
 yes.onclick=()=>{
-  card.classList.add("hidden");
-  secret.classList.remove("hidden");
-
-  setTimeout(()=>{
-    secret.classList.add("hidden");
-    final.classList.remove("hidden");
-  },4000);
-
-  const msg=
-`Aku jawab IYA 💖
-Aku mau jadi pacar kamu.
-Aku percaya sama kamu.
-
-— R’syh`;
-  wa.href="https://wa.me/62819994446111?text="+encodeURIComponent(msg);
+  step2.classList.add("hidden");
+  final.classList.remove("hidden");
+  wa.href="https://wa.me/62819994446111?text="+encodeURIComponent(
+    "Aku jawab IYA 💖\nAku mau jadi pacar kamu.\n\n— R’syh"
+  );
 };
 
-// LOVE BACKGROUND
+/* HEART BACKGROUND */
 function hearts(){
   setInterval(()=>{
     const h=document.createElement("div");
-    h.className="heart-bg";
-    h.innerText=["💖","💕","💗"][Math.floor(Math.random()*3)];
+    h.className="heart";
+    h.innerText=["💗","💖","💕","💘"][Math.floor(Math.random()*4)];
     h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=3+Math.random()*3+"s";
+    h.style.animationDuration=4+Math.random()*3+"s";
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
-  },300);
+    setTimeout(()=>h.remove(),7000);
+  },260);
 }
 </script>
 
