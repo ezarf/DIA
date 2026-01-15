@@ -2,264 +2,189 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>For R’syh 💖</title>
+<title>Untuk R’syh</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* ================= BASE ================= */
-*{ box-sizing:border-box }
 body{
-  margin:0;
+  background:linear-gradient(180deg,#fde2eb,#fff);
   overflow:hidden;
-  font-family: system-ui, -apple-system;
-  background: radial-gradient(circle at top, #ffe4f1, #ffd6e8);
-  transition: background 1.5s cubic-bezier(.4,0,.2,1);
+  font-family:ui-sans-serif;
 }
 
-/* ================= BACKGROUND LOVE ================= */
-.heart-bg{
+/* floating hearts */
+.heart{
   position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
+  font-size:14px;
+  opacity:.35;
+  animation:float 12s linear infinite;
 }
-.heart-bg span{
-  position:absolute;
-  bottom:-40px;
-  font-size:18px;
-  animation: floatUp linear infinite;
-}
-@keyframes floatUp{
-  from{ transform:translateY(0) scale(.6); opacity:1 }
-  to{ transform:translateY(-120vh) scale(1.6); opacity:0 }
+@keyframes float{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-10vh)}
 }
 
-/* ================= CARD ================= */
-.card{
-  background: rgba(255,255,255,.18);
-  backdrop-filter: blur(26px);
-  border: 1px solid rgba(255,255,255,.28);
-  box-shadow: 0 40px 120px rgba(0,0,0,.35);
-  transition: all 1s cubic-bezier(.4,0,.2,1);
-}
-.float{ animation: float 7s ease-in-out infinite; }
-@keyframes float{ 50%{ transform: translateY(-16px); } }
-
-.hide{
-  opacity:0;
-  transform: scale(.9) translateY(20px);
+/* glass card */
+.glass{
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px);
+  border-radius:24px;
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
 }
 
-/* ================= BUTTON ================= */
+/* smooth */
+.fade{animation:fade .8s ease forwards}
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+
+/* buttons */
 .btn{
-  padding:.8rem 2.2rem;
-  border-radius:9999px;
+  padding:14px 36px;
+  border-radius:999px;
   font-weight:600;
-  transition:all .35s cubic-bezier(.4,0,.2,1);
+  transition:.3s;
 }
 .btn-yes{
   background:#ec4899;
-  box-shadow:0 0 28px rgba(236,72,153,.9);
+  color:white;
 }
-.btn-yes:hover{ transform:scale(1.18); }
-
+.btn-yes:hover{transform:scale(1.07)}
 .btn-no{
-  background:#94a3b8;
-  position:absolute;
-}
-
-/* ================= CONFETTI ================= */
-.confetti{
-  position:fixed;
-  width:6px;height:6px;
-  animation:fall 3s linear forwards;
-}
-@keyframes fall{
-  from{ transform:translateY(-10vh) rotate(0);opacity:1 }
-  to{ transform:translateY(110vh) rotate(720deg);opacity:0 }
-}
-
-/* ================= GAME ================= */
-#game{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-#target{
-  position:absolute;
-  font-size:36px;
-  cursor:pointer;
-  transition: transform .2s;
+  background:#9ca3af;
+  color:white;
 }
 </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center text-white">
+<body class="min-h-screen flex items-center justify-center relative">
 
-<!-- BACKGROUND HEARTS -->
-<div class="heart-bg" id="heartBg"></div>
+<!-- floating hearts -->
+<script>
+for(let i=0;i<25;i++){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDelay=Math.random()*12+"s";
+  h.style.fontSize=10+Math.random()*18+"px";
+  document.body.appendChild(h);
+}
+</script>
 
 <!-- CARD -->
-<div id="card"
- class="card float rounded-3xl p-8 text-center max-w-md w-full z-10 relative">
-
-  <h1 class="text-3xl font-bold mb-3">
-    Hai <span class="text-pink-400">R’syh</span> 💕
+<div id="card" class="glass p-8 max-w-md w-full text-center fade z-10">
+  <h1 class="text-3xl font-bold text-pink-500 mb-3">
+    Hai R’syh
   </h1>
 
-  <p id="text" class="text-gray-200 mb-4 transition-all">
+  <p id="desc" class="text-gray-600 mb-6">
     Aku mau jujur dikit… kamu itu bikin aku nyaman.
   </p>
 
-  <!-- SPOTIFY -->
-  <iframe
-    id="spotify"
-    class="rounded-xl mb-5 mx-auto"
-    style="border:none"
-    src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI?utm_source=generator"
-    width="100%"
-    height="80"
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+  <!-- Spotify Lover -->
+  <iframe id="spotify"
+    class="rounded-xl mb-6"
+    src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI?autoplay=1"
+    width="100%" height="80"
+    allow="autoplay; encrypted-media">
   </iframe>
 
-  <p class="text-xl font-semibold mb-5">
+  <p class="text-lg font-semibold text-gray-700 mb-6">
     Kamu mau jadi pacar aku?
   </p>
 
-  <div class="relative h-16">
-    <button id="yes" class="btn btn-yes absolute left-1/2 -translate-x-24">
+  <div class="flex justify-center gap-6">
+    <button id="yes" class="btn btn-yes">
       Iya
     </button>
-    <button id="no" class="btn btn-no left-1/2 translate-x-16">
+    <button id="no" class="btn btn-no relative">
       Tidak
     </button>
   </div>
 
-  <p id="salting" class="text-pink-200 text-sm mt-4 opacity-0 transition">
-    Kalau kamu ngejar tombol “Tidak” ini, aku jadi salting 😳
+  <p id="hint" class="text-sm text-pink-400 mt-4 opacity-0 transition">
+    Kalau kamu ngejar tombol ini… aku jadi salting
   </p>
 </div>
 
-<!-- GAME -->
-<div id="game">
-  <div id="target">💖</div>
-</div>
+<!-- ENDING -->
+<div id="ending"
+ class="hidden fixed inset-0 flex items-center justify-center text-center px-6">
+  <div class="glass p-10 max-w-md w-full fade">
 
-<!-- FINAL -->
-<div id="final"
- class="hidden absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-20">
-  <h2 class="text-4xl font-bold text-pink-400 mb-4">
-    Aku seneng banget 💖
-  </h2>
-  <p class="text-gray-300 max-w-md mb-6">
-    Aku nggak janji sempurna,  
-    tapi aku janji bakal selalu usaha,  
-    jaga kamu, dan ada buat kamu.
-  </p>
+    <p id="l1" class="text-gray-700 mb-4"></p>
+    <p id="l2" class="text-gray-700 mb-4"></p>
+    <p id="l3" class="text-gray-800 font-medium mb-8"></p>
 
-  <a id="wa" class="btn btn-yes cursor-pointer">
-    Kirim Jawaban ke WhatsApp 💌
-  </a>
+    <a id="wa"
+      class="btn btn-yes opacity-0 transition inline-block">
+      Lanjut ke WhatsApp
+    </a>
+
+  </div>
 </div>
 
 <script>
-const card=document.getElementById("card");
-const text=document.getElementById("text");
 const no=document.getElementById("no");
 const yes=document.getElementById("yes");
-const salting=document.getElementById("salting");
-const game=document.getElementById("game");
-const target=document.getElementById("target");
-const final=document.getElementById("final");
+const desc=document.getElementById("desc");
+const hint=document.getElementById("hint");
+const card=document.getElementById("card");
+const ending=document.getElementById("ending");
+const l1=document.getElementById("l1");
+const l2=document.getElementById("l2");
+const l3=document.getElementById("l3");
 const wa=document.getElementById("wa");
-const heartBg=document.getElementById("heartBg");
 
-let step=0, score=0;
+let chase=0;
 
-/* BACKGROUND HEARTS */
-setInterval(()=>{
-  const h=document.createElement("span");
-  h.innerText=["💗","💖","💕"][Math.floor(Math.random()*3)];
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=6+Math.random()*4+"s";
-  heartBg.appendChild(h);
-  setTimeout(()=>h.remove(),10000);
-},400);
-
-/* CONFETTI */
-function confetti(n){
-  for(let i=0;i<n;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3500);
-  }
-}
-
-/* NO BUTTON */
-function evade(){
-  salting.style.opacity=1;
-
+/* tombol tidak kabur */
+no.addEventListener("mouseenter",()=>{
+  hint.style.opacity=1;
   no.style.transform=
-    `translate(${Math.random()*260-130}px, ${Math.random()*160-80}px)
-     rotate(${step*6}deg)`;
+    `translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
+  chase++;
 
-  if(step===0) text.innerText="Eh… kok dikejar sih 😳";
-  else if(step===1) text.innerText="Aku jadi malu tau…";
-  else if(step===2) text.innerText="Kamu gemas banget 😭";
-  else{
-    startGame();
-    return;
+  if(chase===2) desc.innerText="Eh… kok kamu ngejar sih 😳";
+  if(chase===3) desc.innerText="Aku jadi makin salah tingkah tau…";
+  if(chase>=4){
+    no.innerText="Iya";
+    no.className="btn btn-yes";
   }
-  step++;
-}
+});
 
-no.addEventListener("mouseenter",evade);
-no.addEventListener("click",evade);
+/* autoplay spotify unlock */
+document.body.addEventListener("click",()=>{
+  const s=document.getElementById("spotify");
+  s.src=s.src;
+},{once:true});
 
-/* GAME */
-function startGame(){
-  card.classList.add("hide");
+/* YES → cinematic ending */
+yes.onclick=()=>{
+  card.classList.add("opacity-0");
   setTimeout(()=>{
-    card.style.display="none";
-    game.style.display="flex";
-    moveTarget();
-  },800);
-}
-function moveTarget(){
-  target.style.left=Math.random()*80+"vw";
-  target.style.top=Math.random()*80+"vh";
-}
-target.onclick=()=>{
-  score++;
-  confetti(15);
-  if(score>=3){
-    game.style.display="none";
-    finish();
-  }else moveTarget();
+    card.classList.add("hidden");
+    ending.classList.remove("hidden");
+    cinematic();
+  },600);
 };
 
-/* YES */
-yes.onclick=finish;
-
-/* FINAL */
-function finish(){
-  confetti(80);
-  final.classList.remove("hidden");
+function cinematic(){
+  setTimeout(()=>{l1.innerText="Aku nggak nyari hubungan yang sempurna."},600);
+  setTimeout(()=>{l2.innerText="Aku cuma mau yang dijalanin pelan, tapi serius."},1800);
+  setTimeout(()=>{l3.innerText="Kalau kamu mau, aku siap belajar bareng kamu."},3200);
+  setTimeout(()=>{
+    wa.style.opacity=1;
+    wa.href=
+      "https://wa.me/6281994446111?text="+
+      encodeURIComponent(
+        "Aku jawab IYA. Aku mau jalanin ini pelan-pelan tapi serius sama kamu."
+      );
+  },4600);
 }
-
-/* WHATSAPP */
-wa.onclick=()=>{
-  const msg=encodeURIComponent(
-    "Aku jawab IYA 💖\nAku mau sama kamu.\nMakasih ya udah se-niat ini."
-  );
-  window.location.href="https://wa.me/6281994446111?text="+msg;
-};
 </script>
 
 </body>
