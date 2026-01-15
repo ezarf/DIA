@@ -1,254 +1,205 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Untuk Kamu 🤍</title>
 
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- GSAP (industry-grade animation) -->
 <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body {
-  font-family: 'Inter', sans-serif;
-}
-.font-serif {
-  font-family: 'Playfair Display', serif;
-}
+body { font-family: 'Inter', sans-serif; }
+.font-serif { font-family: 'Playfair Display', serif; }
 
-/* ===== BACKGROUND ===== */
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
-/* ===== PARTICLES ===== */
-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-}
-
-/* ===== CARD GLOW ===== */
-.card-glow::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: linear-gradient(120deg, #f472b6, #fb7185, #f472b6);
-  opacity: .35;
-  filter: blur(25px);
-  z-index: -1;
+.word {
+  opacity: 0;
+  display: inline-block;
 }
 </style>
 </head>
 
-<body class="min-h-screen overflow-hidden bg-gradient-to-br from-pink-200 via-pink-100 to-rose-200 bg-[length:400%_400%] animate-[gradientMove_18s_ease_infinite]">
+<body class="min-h-screen bg-gradient-to-br from-pink-200 via-pink-100 to-rose-200 bg-[length:400%_400%] animate-[gradientMove_18s_ease_infinite] overflow-hidden">
 
-<!-- PARTICLE CANVAS -->
-<canvas id="particles"></canvas>
+<div class="flex items-center justify-center min-h-screen px-4">
 
-<!-- MAIN -->
-<div class="relative z-10 flex items-center justify-center min-h-screen px-4">
+<div class="w-full max-w-md bg-white/90 backdrop-blur-xl rounded-3xl p-8 text-center shadow-[0_40px_140px_rgba(0,0,0,.2)]">
 
-  <div id="card"
-    class="relative card-glow w-full max-w-md rounded-3xl bg-white/90 backdrop-blur-xl
-           shadow-[0_40px_140px_rgba(0,0,0,.2)] p-8 text-center opacity-0">
+<div id="content" class="space-y-10">
 
-    <!-- OPENING -->
-    <div class="space-y-3 mb-10 text-gray-700">
-      <p class="font-serif text-lg">Aku nggak nyari yang sempurna.</p>
-      <p class="font-serif text-lg">Aku cuma mau yang saling jaga.</p>
-      <p class="font-serif text-lg italic">Dan jujur…</p>
-    </div>
+<!-- ================= 0. GAME ================= -->
+<div id="game" class="space-y-5">
+  <h2 class="font-serif text-2xl text-pink-600">
+    Game kecil dulu 🎮
+  </h2>
+  <p class="text-gray-700">
+    Sejujurnya… kamu ngerasa aku itu orangnya gimana?
+  </p>
 
-    <!-- QUESTION -->
-    <h2 class="font-serif text-2xl font-semibold text-pink-600 mb-8">
-      Kamu mau jadi pacar aku?
-    </h2>
-
-    <!-- BUTTONS -->
-    <div class="relative flex justify-center gap-6 mb-6">
-      <button id="yesBtn"
-        class="magnetic px-10 py-3 rounded-full bg-gradient-to-r from-pink-500 to-rose-400
-               text-white font-medium shadow-lg transition">
-        Iya 🤍
-      </button>
-
-      <button id="noBtn"
-        class="px-10 py-3 rounded-full bg-gray-400 text-white font-medium transition">
-        Tidak
-      </button>
-    </div>
-
-    <p id="tease" class="text-sm text-pink-400 opacity-0">
-      Jangan kabur… aku kelihatan kok 😳
-    </p>
-
-    <!-- SONGS -->
-    <div id="songs" class="hidden mt-10 space-y-5">
-      <p class="font-serif text-lg text-gray-700">
-        Lagu  buat kita 🎶
-      </p>
-
-      <div class="space-y-3">
-        <div class="song" data-title="Lover — Taylor Swift"
-          data-src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI">
-          Lover — Taylor Swift
-        </div>
-        <div class="song" data-title="Begin Again — Taylor Swift"
-          data-src="https://open.spotify.com/embed/track/0dBw0tS1Vw9fH4t9Qe6Z0H">
-          Begin Again — Taylor Swift
-        </div>
-        <div class="song" data-title="You Belong With Me — Taylor Swift"
-          data-src="https://open.spotify.com/embed/track/6M2wZ9GZgrQXHCFfjv46we">
-          You Belong With Me — Taylor Swift
-        </div>
-      </div>
-
-      <div id="player" class="hidden mt-4"></div>
-
-      <button onclick="sendWA()"
-        class="mt-6 w-full rounded-full bg-gradient-to-r from-pink-500 to-rose-400
-               py-3 text-white font-medium shadow-lg">
-        Kirim ke WhatsApp 💌
-      </button>
-    </div>
+  <div class="space-y-3">
+    <button onclick="finishGame('Hehe, aku senyum bacanya 🤍')"
+      class="w-full border rounded-xl p-4 hover:bg-pink-50 transition">
+      😌 Bikin nyaman tanpa sadar
+    </button>
+    <button onclick="finishGame('Nah ini bahaya… aku salting 😳')"
+      class="w-full border rounded-xl p-4 hover:bg-pink-50 transition">
+      🥰 Bikin kepikiran
+    </button>
+    <button onclick="finishGame('Aku ketawa sendiri bacanya 😅')"
+      class="w-full border rounded-xl p-4 hover:bg-pink-50 transition">
+      🤍 Bikin aman dan nyaman 
+    </button>
   </div>
+
+  <p id="gameResult" class="text-pink-400 opacity-0"></p>
 </div>
 
-<!-- CONFETTI -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- ================= 1. OPENING ================= -->
+<div id="opening" class="hidden space-y-4 text-gray-700 font-serif text-lg">
+  <p class="animated-text">Aku nggak nyari yang sempurna.</p>
+  <p class="animated-text">Aku cuma mau yang saling jaga.</p>
+  <p class="animated-text italic">Dan jujur…</p>
+</div>
+
+<!-- ================= 2. SONG PICK ================= -->
+<div id="songSection" class="hidden space-y-4">
+  <p class="font-serif text-lg text-gray-700">
+    Pilih lagu yang paling kamu enak banget 🎶
+  </p>
+
+  <div class="song border rounded-xl p-4 hover:bg-pink-50 transition"
+    data-title="Lover — Taylor Swift"
+    data-src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI">
+    Lover — Taylor Swift
+  </div>
+
+  <div class="song border rounded-xl p-4 hover:bg-pink-50 transition"
+    data-title="Begin Again — Taylor Swift"
+    data-src="https://open.spotify.com/embed/track/3n9mzjgAzjyK3M0nUq4QfC">
+    Begin Again — Taylor Swift
+  </div>
+
+  <div class="song border rounded-xl p-4 hover:bg-pink-50 transition"
+    data-title="You Belong With Me — Taylor Swift"
+    data-src="https://open.spotify.com/embed/track/6M2wZ9GZgrQXHCFfjv46we">
+    You Belong With Me — Taylor Swift
+  </div>
+
+  <div id="player" class="hidden mt-4"></div>
+</div>
+
+<!-- ================= 3. CONFESSION ================= -->
+<div id="question" class="hidden text-center space-y-6">
+  <h2 class="font-serif text-2xl text-pink-600">
+    Kamu mau jadi pacar aku?
+  </h2>
+  <button id="yesBtn"
+    class="px-10 py-3 rounded-full bg-gradient-to-r from-pink-500 to-rose-400 text-white shadow-lg">
+    Iya 🤍
+  </button>
+</div>
+
+<!-- ================= 4. MESSAGES ================= -->
+<div id="messages" class="hidden space-y-4 font-serif text-lg text-gray-700">
+  <p class="animated-text">Aku selalu ada buat kamu.</p>
+  <p class="animated-text">Aku nggak bakal ninggalin kamu.</p>
+  <p class="animated-text">Aku setia, dan aku serius.</p>
+  <p class="animated-text">Aku mau kita sama-sama excited.</p>
+  <p class="animated-text">Sama-sama belajar.</p>
+  <p class="animated-text italic">Dan sama-sama saling menjaga.</p>
+</div>
+
+<!-- ================= 5. WHATSAPP ================= -->
+<div id="sendWA" class="hidden">
+  <button onclick="sendWA()"
+    class="w-full rounded-full bg-gradient-to-r from-pink-500 to-rose-400 py-3 text-white shadow-lg">
+    Kirim Jawaban ke WhatsApp ya sayangg 💌
+  </button>
+</div>
+
+</div>
+</div>
+</div>
 
 <script>
-/* ===== CARD INTRO ===== */
-gsap.to('#card', {
-  opacity: 1,
-  y: 0,
-  duration: 1.4,
-  ease: 'power4.out'
-});
-
-/* ===== MAGNETIC BUTTON ===== */
-document.querySelectorAll('.magnetic').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const r = btn.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width / 2;
-    const y = e.clientY - r.top - r.height / 2;
-    gsap.to(btn, { x: x * 0.25, y: y * 0.25, duration: .3 });
-  });
-  btn.addEventListener('mouseleave', () => {
-    gsap.to(btn, { x: 0, y: 0, duration: .4 });
-  });
-});
-
-/* ===== NO BUTTON ESCAPE ===== */
-let moves = 0;
-const noBtn = document.getElementById('noBtn');
-const tease = document.getElementById('tease');
-
-noBtn.onclick = () => {
-  tease.style.opacity = 1;
-  moves++;
-  gsap.to(noBtn, {
-    x: Math.random() * 120 - 60,
-    y: Math.random() * 80 - 40,
-    duration: .4
-  });
-  if (moves > 2) {
-    noBtn.textContent = 'Iya 🤍';
-    noBtn.className = document.getElementById('yesBtn').className;
-  }
-};
-
-/* ===== YES BUTTON ===== */
-const yesBtn = document.getElementById('yesBtn');
-const songs = document.getElementById('songs');
-
-yesBtn.onclick = () => {
-  confetti({
-    particleCount: 120,
-    spread: 90,
-    origin: { y: 0.6 }
-  });
-
-  gsap.to('#card', { scale: 1.03, duration: .2, yoyo: true, repeat: 1 });
-
-  songs.classList.remove('hidden');
-  gsap.from('#songs', { opacity: 0, y: 30, duration: .8 });
-
-  yesBtn.disabled = true;
-  noBtn.disabled = true;
-};
-
-/* ===== SONG SELECT ===== */
 let selectedSong = '';
-document.querySelectorAll('.song').forEach(el => {
-  el.className += ' cursor-pointer rounded-xl border border-pink-200 p-4 hover:bg-pink-50 transition';
-  el.onclick = () => {
-    document.querySelectorAll('.song').forEach(s => s.classList.remove('border-pink-500'));
-    el.classList.add('border-pink-500');
-    selectedSong = el.dataset.title;
 
-    const player = document.getElementById('player');
+function animateText(scope){
+  scope.querySelectorAll('.animated-text').forEach(p=>{
+    const words = p.innerText.split(' ');
+    p.innerHTML='';
+    words.forEach(w=>{
+      const span=document.createElement('span');
+      span.className='word mr-1';
+      span.innerText=w;
+      p.appendChild(span);
+    });
+    gsap.to(p.children,{
+      opacity:1,
+      stagger:.12,
+      duration:.6,
+      ease:'power2.out'
+    });
+  });
+}
+
+/* GAME */
+function finishGame(text){
+  const res=document.getElementById('gameResult');
+  res.innerText=text;
+  res.style.opacity=1;
+
+  setTimeout(()=>{
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('opening').classList.remove('hidden');
+    animateText(document.getElementById('opening'));
+
+    setTimeout(()=>{
+      document.getElementById('songSection').classList.remove('hidden');
+    },1500);
+  },1200);
+}
+
+/* SONG */
+document.querySelectorAll('.song').forEach(el=>{
+  el.onclick=()=>{
+    document.querySelectorAll('.song').forEach(s=>s.classList.remove('border-pink-500'));
+    el.classList.add('border-pink-500');
+    selectedSong=el.dataset.title;
+
+    const player=document.getElementById('player');
     player.classList.remove('hidden');
-    player.innerHTML = `
-      <iframe class="rounded-xl"
-        src="${el.dataset.src}"
-        width="100%" height="80"
-        allow="autoplay; encrypted-media"></iframe>
-    `;
+    player.innerHTML=`<iframe class="rounded-xl" src="${el.dataset.src}" width="100%" height="80"></iframe>`;
+
+    document.getElementById('question').classList.remove('hidden');
   };
 });
 
-/* ===== WHATSAPP ===== */
-function sendWA() {
-  const msg = `Aku jawab IYA 🤍\nLagu kita: "${selectedSong}"`;
+/* YES */
+document.getElementById('yesBtn').onclick=()=>{
+  confetti({particleCount:120,spread:90});
+  document.getElementById('messages').classList.remove('hidden');
+  animateText(document.getElementById('messages'));
+
+  setTimeout(()=>{
+    document.getElementById('sendWA').classList.remove('hidden');
+  },1200);
+};
+
+/* WA */
+function sendWA(){
+  const msg=`Jawaban aku: IYA 🤍\nLagu kita: ${selectedSong}`;
   window.open(`https://wa.me/6281994446111?text=${encodeURIComponent(msg)}`);
 }
-
-/* ===== PARTICLES ===== */
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let w, h, particles;
-
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
-
-particles = Array.from({ length: 40 }, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  r: Math.random() * 2 + 1,
-  dx: Math.random() * .3,
-  dy: Math.random() * .3
-}));
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  ctx.fillStyle = 'rgba(244,114,182,.35)';
-  particles.forEach(p => {
-    p.x += p.dx;
-    p.y += p.dy;
-    if (p.x > w) p.x = 0;
-    if (p.y > h) p.y = 0;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
 </script>
 
 </body>
