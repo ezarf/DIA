@@ -14,7 +14,7 @@
 body{
   margin:0;
   font-family:ui-sans-serif,system-ui;
-  background:#0b0612;
+  background:#06020a;
   color:white;
   overflow:hidden;
 }
@@ -26,20 +26,24 @@ body{
     radial-gradient(40% 30% at 20% 20%, #3b1023, transparent),
     radial-gradient(40% 30% at 80% 30%, #1c0f1a, transparent),
     linear-gradient(180deg,#05010a,#120815);
+  animation:bgmove 20s infinite alternate;
   z-index:-10;
+}
+@keyframes bgmove{
+  from{filter:hue-rotate(0deg)}
+  to{filter:hue-rotate(15deg)}
 }
 
 /* SCENE */
 .scene{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   opacity:0;
   pointer-events:none;
-  transition:opacity .9s var(--ease), transform .9s var(--ease);
-  transform:translateY(20px);
+  transform:translateY(30px) scale(.98);
+  transition:opacity 1s var(--ease), transform 1s var(--ease);
 }
 .scene.active{
   opacity:1;
@@ -50,26 +54,44 @@ body{
 /* GLASS */
 .glass{
   background:rgba(255,255,255,.12);
-  backdrop-filter:blur(28px);
+  backdrop-filter:blur(30px);
   border-radius:28px;
-  padding:2rem;
-  max-width:380px;
+  padding:2.2rem;
+  max-width:400px;
   width:90%;
   text-align:center;
-  box-shadow:0 40px 120px rgba(0,0,0,.5);
+  box-shadow:0 50px 140px rgba(0,0,0,.6);
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 
 /* BUTTON */
 .btn{
   margin-top:2rem;
-  padding:14px 42px;
+  padding:14px 44px;
   border-radius:999px;
   font-weight:600;
   background:var(--pink);
   color:white;
-  transition:transform .3s var(--ease);
+  transition:transform .3s var(--ease), box-shadow .3s;
+  box-shadow:0 10px 30px rgba(236,72,153,.4);
 }
 .btn:active{transform:scale(.95)}
+
+/* MUSIC CONTROL */
+.music{
+  position:fixed;
+  bottom:20px; right:20px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(16px);
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:14px;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -77,87 +99,86 @@ body{
 
 <div class="bg"></div>
 
-<!-- PAGE 1 : OPENING -->
+<!-- MUSIC -->
+<iframe id="music"
+  style="display:none"
+  src="https://open.spotify.com/embed/track/3UmaczJpikHgJFyBTAJVoz?utm_source=generator&theme=0"
+  width="300" height="80" frameborder="0"
+  allow="autoplay; clipboard-write; encrypted-media">
+</iframe>
+
+<div class="music" onclick="toggleMusic()">🎵 Music</div>
+
+<!-- SCENES -->
 <section class="scene active">
   <div class="glass">
-    <h1 class="text-3xl font-bold text-pink-400 mb-4">
-      Hai R’syh
-    </h1>
-    <p class="text-gray-200 leading-relaxed">
-      Aku nggak tau kapan tepatnya,<br>
-      tapi sejak kenal kamu,<br>
-      hal-hal kecil jadi terasa lebih tenang.
+    <h1 class="text-3xl font-bold text-pink-400 mb-4">Hai R’syh</h1>
+    <p class="leading-relaxed text-gray-200">
+      Ini bukan tentang kata-kata manis.<br>
+      Tapi tentang perasaan yang tumbuh pelan-pelan.
     </p>
     <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
 </section>
 
-<!-- PAGE 2 : NYERTAIN -->
 <section class="scene">
   <div class="glass">
-    <p class="text-gray-200 leading-relaxed">
-      Kamu itu bukan yang datang<br>
-      bikin semuanya heboh.<br><br>
-      Tapi caramu hadir,<br>
-      bikin aku betah.
+    <p class="leading-relaxed text-gray-200">
+      Sejak kamu hadir,<br>
+      aku belajar satu hal…<br><br>
+      tenang itu bisa datang<br>
+      dari orang yang tepat.
     </p>
     <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
 </section>
 
-<!-- PAGE 3 : SALTING -->
 <section class="scene">
   <div class="glass">
-    <p class="text-gray-200 leading-relaxed">
-      Lucunya…<br>
-      kamu nggak berusaha apa-apa.<br><br>
-      Tapi entah kenapa,<br>
-      aku nyaman.
+    <p class="leading-relaxed text-gray-200">
+      Kamu nggak berisik.<br>
+      Nggak berlebihan.<br><br>
+      Tapi justru itu yang bikin aku nyaman.
     </p>
     <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
 </section>
 
-<!-- PAGE 4 : BRUTAL -->
 <section class="scene">
   <div class="glass">
-    <p class="text-gray-200 leading-relaxed">
-      Kalau suatu hari nanti<br>
-      kamu capek sama dunia,<br><br>
-      aku pengen jadi orang<br>
-      yang kamu cari tanpa sadar.
+    <p class="leading-relaxed text-gray-200">
+      Kalau suatu hari dunia kamu capek,<br>
+      aku pengen jadi tempat pulang<br>
+      yang kamu pilih tanpa ragu.
     </p>
     <button class="btn" onclick="next()">Lanjutkan</button>
   </div>
 </section>
 
-<!-- PAGE 5 : QUESTION -->
 <section class="scene">
   <div class="glass">
-    <p class="text-lg font-semibold text-gray-100 leading-relaxed">
+    <p class="text-lg font-semibold leading-relaxed">
       Jadi…<br><br>
       kalau aku minta kesempatan<br>
-      buat jagain kamu pelan-pelan,<br><br>
+      buat jalan bareng kamu,<br>
+      pelan tapi serius…<br><br>
       kamu mau?
     </p>
     <div class="flex justify-center gap-6 mt-8">
-      <button class="btn" onclick="yes()">Iya</button>
+      <button class="btn" onclick="next()">Iya</button>
       <button class="btn bg-gray-500" onclick="next()">Aku mikir dulu</button>
     </div>
   </div>
 </section>
 
-<!-- PAGE 6 : ENDING -->
 <section class="scene">
   <div class="glass">
-    <p class="mb-4">Aku nggak nyari yang sempurna.</p>
-    <p class="mb-4">Aku cuma mau yang mau tumbuh bareng.</p>
+    <p class="mb-4">Aku nggak janji sempurna.</p>
+    <p class="mb-4">Tapi aku janji hadir.</p>
     <p class="font-medium mb-6">Dan hari ini, aku milih kamu.</p>
-
     <a
-      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20mau%20jalanin%20ini%20pelan-pelan%2C%20tapi%20serius%20sama%20kamu%20%F0%9F%A4%8D"
-      class="btn inline-block"
-    >
+      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20siap%20jalanin%20ini%20bareng%20kamu%20%F0%9F%A4%8D"
+      class="btn inline-block">
       Lanjut ke WhatsApp
     </a>
   </div>
@@ -165,16 +186,22 @@ body{
 
 <script>
 const scenes=document.querySelectorAll('.scene');
-let index=0;
+let index=0, musicStarted=false;
+const music=document.getElementById('music');
 
 function next(){
+  if(!musicStarted){
+    music.style.display="block";
+    musicStarted=true;
+  }
   scenes[index].classList.remove('active');
   index=Math.min(index+1,scenes.length-1);
   scenes[index].classList.add('active');
 }
 
-function yes(){
-  next();
+function toggleMusic(){
+  music.style.display =
+    music.style.display==="none"?"block":"none";
 }
 </script>
 
