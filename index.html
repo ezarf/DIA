@@ -2,52 +2,31 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Untuk R’syh</title>
+<title>Untuk Kamu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-:root{
-  --pink:#ec4899;
-  --soft:#fff5fa;
-}
 body{
-  margin:0;
   font-family: ui-sans-serif, system-ui;
   background:#fff;
   overflow:hidden;
-  color:#374151;
 }
 
-/* ===== CINEMATIC BACKGROUND ===== */
+/* Background premium */
 .bg{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   background:
-    radial-gradient(420px 420px at 15% 20%, #ffd6e8, transparent),
-    radial-gradient(360px 360px at 85% 30%, #ffeaf4, transparent),
+    radial-gradient(420px 420px at 10% 20%, #ffd6e8, transparent),
+    radial-gradient(380px 380px at 90% 30%, #ffeaf4, transparent),
     radial-gradient(300px 300px at 50% 85%, #fff0f6, transparent),
-    linear-gradient(180deg, var(--soft), #ffffff);
-  z-index:-10;
-}
-.bg::after{
-  content:"";
-  position:absolute; inset:0;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+    linear-gradient(180deg, #fff5fa, #ffffff);
+  z-index:-1;
 }
 
-/* ===== FLOATING DECOR ===== */
-.float{
-  position:absolute;
-  opacity:.22;
-  animation:float 16s ease-in-out infinite;
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-20px)}
-}
-
-/* ===== PAGE SYSTEM ===== */
+/* Page system */
 .page{
   position:fixed;
   inset:0;
@@ -55,35 +34,35 @@ body{
   align-items:center;
   justify-content:center;
   opacity:0;
+  transform:translateY(40px) scale(.97);
   pointer-events:none;
-  transform:translateY(32px) scale(.97);
   transition:1s cubic-bezier(.22,1,.36,1);
 }
 .page.active{
   opacity:1;
-  pointer-events:auto;
   transform:none;
+  pointer-events:auto;
 }
 
-/* ===== CARD ===== */
+/* Card */
 .card{
-  background:rgba(255,255,255,.88);
-  backdrop-filter:blur(26px);
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(30px);
   border-radius:36px;
   padding:3rem 2.8rem;
-  max-width:440px;
+  max-width:460px;
   width:90%;
   text-align:center;
-  box-shadow:0 60px 140px rgba(0,0,0,.14);
+  box-shadow:0 50px 120px rgba(0,0,0,.12);
 }
 
-/* ===== BUTTON ===== */
+/* Button */
 .btn{
-  margin-top:2.2rem;
+  margin-top:2rem;
   padding:15px 48px;
   border-radius:999px;
   font-weight:600;
-  background:var(--pink);
+  background:#ec4899;
   color:white;
   transition:.25s ease;
 }
@@ -98,64 +77,81 @@ body{
 <body>
 
 <div class="bg"></div>
-<div class="float" style="top:16%;left:10%">✨</div>
-<div class="float" style="bottom:20%;right:14%;animation-delay:6s">💗</div>
-<div class="float" style="top:32%;right:22%;animation-delay:10s">🌸</div>
 
-<!-- ===== PAGE 1 ===== -->
+<!-- PAGE 1 -->
 <section class="page active">
   <div class="card">
     <h1 class="text-3xl font-semibold text-pink-500 mb-4">
-      Hai R’syh
+      Hai
     </h1>
-    <p class="text-gray-600">
-      Ini bukan sesuatu yang instan.<br>
-      Aku bikin pelan-pelan.
+    <p class="text-gray-600 leading-relaxed">
+      Aku nggak datang buat mengganggu.<br>
+      Aku cuma pengen kamu baca ini pelan-pelan.
     </p>
-    <button class="btn" onclick="next()">Lanjutkan</button>
+    <button class="btn" onclick="next()">Lanjut</button>
   </div>
 </section>
 
 <!-- PAGE 2 -->
 <section class="page">
   <div class="card">
-    <p>
-      Ada orang yang datang dengan cara sederhana.<br>
-      Tapi efeknya lama.
+    <p class="leading-relaxed">
+      Aku sadar,<br>
+      setiap orang punya ceritanya sendiri.<br><br>
+      Dan aku nggak mau jadi orang yang
+      masuk tanpa permisi.
     </p>
-    <button class="btn" onclick="next()">Lanjutkan</button>
+    <button class="btn" onclick="next()">Lanjut</button>
   </div>
 </section>
 
 <!-- PAGE 3 -->
 <section class="page">
   <div class="card">
-    <p>
-      Kamu nggak pernah berusaha menarik perhatian.<br>
-      Tapi aku selalu nemu kamu.
+    <p class="leading-relaxed">
+      Tapi jujur aja,<br>
+      ada hal tentang kamu yang bikin aku
+      pengen berhenti sebentar.
     </p>
-    <button class="btn" onclick="next()">Lanjutkan</button>
+    <button class="btn" onclick="next()">Lanjut</button>
   </div>
 </section>
 
 <!-- PAGE 4 -->
 <section class="page">
   <div class="card">
-    <p>
-      Kalau suatu hari kamu capek sama dunia,<br>
-      aku mau jadi tempat kamu berhenti sebentar.
+    <p class="leading-relaxed">
+      Bukan karena kamu paling sempurna.<br>
+      Tapi karena kamu terasa… tenang.
     </p>
-    <button class="btn" onclick="next()">Lanjutkan</button>
+    <button class="btn" onclick="next()">Lanjut</button>
   </div>
 </section>
 
-<!-- PAGE 5 (QUESTION) -->
+<!-- PAGE 5 -->
+<section class="page">
+  <div class="card">
+    <p class="leading-relaxed">
+      Aku nggak janji akan selalu benar.<br>
+      Tapi aku janji mau belajar jujur,
+      dan hadir kalau kamu butuh.
+    </p>
+    <button class="btn" onclick="next()">Lanjut</button>
+  </div>
+</section>
+
+<!-- PAGE 6 (QUESTION) -->
 <section class="page">
   <div class="card">
     <p class="text-lg font-semibold mb-6">
       Jadi…<br>
-      kamu mau jalan bareng aku?
+      kalau suatu hari kamu mau berjalan
+      pelan-pelan,
     </p>
+    <p class="mb-6">
+      bolehkah aku jalan di sebelahmu?
+    </p>
+
     <div class="flex justify-center gap-6">
       <button class="btn" onclick="next()">Iya</button>
       <button id="no" class="btn secondary">Tidak</button>
@@ -163,17 +159,18 @@ body{
   </div>
 </section>
 
-<!-- PAGE 6 (ENDING) -->
+<!-- PAGE 7 (ENDING) -->
 <section class="page">
   <div class="card">
-    <p class="mb-3">
-      Aku nggak janji sempurna.
+    <p class="mb-4">
+      Terima kasih sudah sampai sejauh ini.
     </p>
     <p class="mb-8">
-      Tapi aku janji hadir dan jujur.
+      Jawaban kamu, apa pun itu,
+      tetap aku hargai.
     </p>
     <a
-      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20mau%20jalanin%20ini%20bareng%20kamu."
+      href="https://wa.me/6281994446111?text=Aku%20udah%20baca%20semuanya.%20Kita%20boleh%20ngobrol%20pelan-pelan."
       class="btn inline-block">
       Lanjut ke WhatsApp
     </a>
@@ -182,19 +179,20 @@ body{
 
 <script>
 const pages=document.querySelectorAll('.page');
-let i=0, chase=0;
+let index=0;
 const no=document.getElementById('no');
+let dodge=0;
 
 function next(){
-  pages[i].classList.remove('active');
-  i++;
-  pages[i].classList.add('active');
+  pages[index].classList.remove('active');
+  index++;
+  pages[index].classList.add('active');
 }
 
 no.onclick=()=>{
-  chase++;
-  no.style.transform=`translate(${Math.random()*90-45}px,${Math.random()*70-35}px)`;
-  if(chase>=3){
+  dodge++;
+  no.style.transform=`translate(${Math.random()*80-40}px,${Math.random()*60-30}px)`;
+  if(dodge>=3){
     no.innerText="Iya";
     no.classList.remove("secondary");
     no.onclick=next;
@@ -204,3 +202,4 @@ no.onclick=()=>{
 
 </body>
 </html>
+
