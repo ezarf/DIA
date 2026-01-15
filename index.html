@@ -145,15 +145,22 @@ body.pink{
 <body>
 <div class="bg"></div>
 
-<!-- MUSIC -->
-<audio id="lover" preload="auto">
-  <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/7f/4c/5f/7f4c5f8f-ef93-b4ef-1a24-9f75d4c9a5e0/mzaf_12068930789821880288.plus.aac.p.m4a" type="audio/mp4">
-</audio>
-
+<!-- MUSIC (YouTube Embed) -->
 <div class="player">
   <span class="text-sm">🎵 Lover – Taylor Swift</span>
   <button onclick="toggleMusic()">▶️ / ⏸</button>
 </div>
+
+<!-- Hidden YouTube Player -->
+<iframe
+  id="ytplayer"
+  width="0"
+  height="0"
+  src="https://www.youtube.com/embed/cYVnC9gH6Dk?enablejsapi=1"
+  frameborder="0"
+  allow="autoplay"
+  allowfullscreen
+></iframe>
 
 <!-- SCENES -->
 <section class="scene active">
