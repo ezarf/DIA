@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Untuk R’syh</title>
+<title>Untuk Kamu Dari Ezar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Tailwind CDN -->
@@ -99,14 +99,14 @@ body{
 <body>
 <div class="bg"></div>
 
-<!-- Spotify Embed (hidden until play) -->
+<!-- Spotify Embed (official, requires user interaction) -->
 <iframe
   id="spotify"
   src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
-  width="300"
+  width="100%"
   height="80"
   frameborder="0"
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  allow="encrypted-media"
   class="mx-auto rounded-xl hidden">
 </iframe>
 
@@ -168,9 +168,9 @@ body{
 <section class="page">
   <div class="card">
     <p class="leading-relaxed italic">
-      Aku ingin kamu menerima aku ,<br>
-      Aku ingin kita sama sama belajar apa arti setia  <br>
-      dan cintaa
+      Aku ingin kita jalan pelan tapi pasti ,<br>
+      dan selalu belajar untuk setia<br>
+      ILOVEU.
     </p>
     <button class="btn" onclick="next()">Lanjut</button>
   </div>
@@ -220,8 +220,11 @@ function next(){
 }
 
 function playMusic(){
+  // Spotify TIDAK mengizinkan autoplay suara penuh via iframe.
+  // Solusi paling stabil: tampilkan player dan biarkan user tekan play.
   spotify.classList.remove('hidden');
-  spotify.src += '?autoplay=1';
+  document.querySelector('.music-btn').innerText = 'Tap Play di atas ya';
+  document.querySelector('.music-btn').disabled = true;
 }
 
 no.onclick=()=>{
