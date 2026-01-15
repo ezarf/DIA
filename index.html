@@ -2,244 +2,181 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Untuk Kamu Dari Ezar</title>
+<title>Untuk R’syh</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+:root{
+  --pink:#ec4899;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
 body{
-  font-family: ui-sans-serif, system-ui;
-  background:#fff;
+  margin:0;
+  font-family:ui-sans-serif,system-ui;
+  background:#0b0612;
+  color:white;
   overflow:hidden;
 }
 
-/* Background */
+/* BACKGROUND */
 .bg{
-  position:fixed; inset:0;
+  position:fixed;inset:0;
   background:
-    radial-gradient(420px 420px at 10% 20%, #ffd6e8, transparent),
-    radial-gradient(380px 380px at 90% 30%, #ffeaf4, transparent),
-    radial-gradient(300px 300px at 50% 85%, #fff0f6, transparent),
-    linear-gradient(180deg, #fff5fa, #ffffff);
-  z-index:-1;
+    radial-gradient(40% 30% at 20% 20%, #3b1023, transparent),
+    radial-gradient(40% 30% at 80% 30%, #1c0f1a, transparent),
+    linear-gradient(180deg,#05010a,#120815);
+  z-index:-10;
 }
 
-/* Page system */
-.page{
+/* SCENE */
+.scene{
   position:fixed;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   opacity:0;
-  transform:translateY(40px) scale(.97);
   pointer-events:none;
-  transition:1s cubic-bezier(.22,1,.36,1);
+  transition:opacity .9s var(--ease), transform .9s var(--ease);
+  transform:translateY(20px);
 }
-.page.active{
+.scene.active{
   opacity:1;
-  transform:none;
   pointer-events:auto;
+  transform:none;
 }
 
-/* Card */
-.card{
-  background:rgba(255,255,255,.92);
-  backdrop-filter:blur(30px);
-  border-radius:36px;
-  padding:3rem 2.8rem;
-  max-width:460px;
+/* GLASS */
+.glass{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(28px);
+  border-radius:28px;
+  padding:2rem;
+  max-width:380px;
   width:90%;
   text-align:center;
-  box-shadow:0 50px 120px rgba(0,0,0,.12);
+  box-shadow:0 40px 120px rgba(0,0,0,.5);
 }
 
-/* Button */
+/* BUTTON */
 .btn{
-  margin-top:1.5rem;
-  padding:15px 48px;
+  margin-top:2rem;
+  padding:14px 42px;
   border-radius:999px;
   font-weight:600;
-  background:#ec4899;
+  background:var(--pink);
   color:white;
-  transition:.25s ease;
+  transition:transform .3s var(--ease);
 }
-.btn:active{transform:scale(.96)}
-.btn.secondary{background:#9ca3af}
-
-.note{
-  margin-top:1rem;
-  font-size:.85rem;
-  color:#9d174d;
-  opacity:0;
-  transition:.4s ease;
-}
-.note.show{opacity:1}
-
-/* Music control */
-.music-box{
-  margin-top:1.8rem;
-  padding:.8rem;
-  border-radius:18px;
-  background:rgba(255,255,255,.75);
-  box-shadow:0 20px 40px rgba(0,0,0,.08);
-}
-.music-btn{
-  font-size:.9rem;
-  padding:10px 22px;
-  border-radius:999px;
-  background:#111827;
-  color:white;
-}
+.btn:active{transform:scale(.95)}
 </style>
 </head>
 
 <body>
+
 <div class="bg"></div>
 
-<!-- Spotify Embed (official, requires user interaction) -->
-<iframe
-  id="spotify"
-  src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
-  width="100%"
-  height="80"
-  frameborder="0"
-  allow="encrypted-media"
-  class="mx-auto rounded-xl mt-4"
-  style="pointer-events:auto; z-index:10;">
-</iframe>
-
-<!-- PAGE 1 -->
-<section class="page active">
-  <div class="card">
-    <h1 class="text-3xl font-semibold text-pink-500 mb-4">Hai, R’syh</h1>
-    <p class="text-gray-600 leading-relaxed">
-      Aku nggak datang buat mengganggu.<br>
-      Aku cuma pengen kamu baca ini pelan-pelan.
+<!-- PAGE 1 : OPENING -->
+<section class="scene active">
+  <div class="glass">
+    <h1 class="text-3xl font-bold text-pink-400 mb-4">
+      Hai R’syh
+    </h1>
+    <p class="text-gray-200 leading-relaxed">
+      Aku nggak tau kapan tepatnya,<br>
+      tapi sejak kenal kamu,<br>
+      hal-hal kecil jadi terasa lebih tenang.
     </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
 
-    <div class="music-box">
-      <p class="text-sm text-gray-500 mb-2">Putar lagu dulu ya</p>
-      <button class="music-btn" onclick="playMusic()">⬆️ Tap Play di Spotify Player</button>
+<!-- PAGE 2 : NYERTAIN -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Kamu itu bukan yang datang<br>
+      bikin semuanya heboh.<br><br>
+      Tapi caramu hadir,<br>
+      bikin aku betah.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 3 : SALTING -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Lucunya…<br>
+      kamu nggak berusaha apa-apa.<br><br>
+      Tapi entah kenapa,<br>
+      aku nyaman.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 4 : BRUTAL -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-gray-200 leading-relaxed">
+      Kalau suatu hari nanti<br>
+      kamu capek sama dunia,<br><br>
+      aku pengen jadi orang<br>
+      yang kamu cari tanpa sadar.
+    </p>
+    <button class="btn" onclick="next()">Lanjutkan</button>
+  </div>
+</section>
+
+<!-- PAGE 5 : QUESTION -->
+<section class="scene">
+  <div class="glass">
+    <p class="text-lg font-semibold text-gray-100 leading-relaxed">
+      Jadi…<br><br>
+      kalau aku minta kesempatan<br>
+      buat jagain kamu pelan-pelan,<br><br>
+      kamu mau?
+    </p>
+    <div class="flex justify-center gap-6 mt-8">
+      <button class="btn" onclick="yes()">Iya</button>
+      <button class="btn bg-gray-500" onclick="next()">Aku mikir dulu</button>
     </div>
-
-    <button class="btn" onclick="next()">Lanjut</button>
   </div>
 </section>
 
-<!-- PAGE 2 -->
-<section class="page">
-  <div class="card">
-    <p class="leading-relaxed">
-      Aku sadar,<br>
-      setiap orang punya ceritanya sendiri.<br><br>
-      Dan aku nggak mau jadi orang yang
-      masuk tanpa permisi.
-    </p>
-    <button class="btn" onclick="next()">Lanjut</button>
-  </div>
-</section>
+<!-- PAGE 6 : ENDING -->
+<section class="scene">
+  <div class="glass">
+    <p class="mb-4">Aku nggak nyari yang sempurna.</p>
+    <p class="mb-4">Aku cuma mau yang mau tumbuh bareng.</p>
+    <p class="font-medium mb-6">Dan hari ini, aku milih kamu.</p>
 
-<!-- PAGE 3 -->
-<section class="page">
-  <div class="card">
-    <p class="leading-relaxed">
-      Tapi jujur aja,<br>
-      ada hal tentang kamu yang bikin aku
-      pengen berhenti sebentar.
-    </p>
-    <button class="btn" onclick="next()">Lanjut</button>
-  </div>
-</section>
-
-<!-- PAGE 4 -->
-<section class="page">
-  <div class="card">
-    <p class="leading-relaxed">
-      Bukan karena kamu paling sempurna.<br>
-      Tapi karena kamu terasa… tenang.
-    </p>
-    <button class="btn" onclick="next()">Lanjut</button>
-  </div>
-</section>
-
-<!-- PAGE 5 (LYRIC MOMENT) -->
-<section class="page">
-  <div class="card">
-    <p class="leading-relaxed italic">
-      Aku bakal setia sama kamu.<br>
-      Kita belajar bersama-sama<br>
-      tentang apa itu cinta.<br><br>
-      Dan aku harap perjalanan kita
-      akan mulus dan bahagia.
-    </p>
-    <button class="btn" onclick="next()">Lanjut</button>
-  </div>
-</section>
-
-<!-- PAGE 6 (QUESTION) -->
-<section class="page">
-  <div class="card">
-    <p class="text-lg font-semibold mb-6">
-      Jadi…<br>
-      kalau suatu hari kamu mau berjalan
-      pelan-pelan,
-    </p>
-    <p class="mb-6">kamu mau nggak jadi pacar aku?</p>
-
-    <div class="flex justify-center gap-6">
-      <button class="btn" onclick="next()">Iya</button>
-      <button id="no" class="btn secondary">Tidak</button>
-    </div>
-    <div id="note" class="note">Hey, kamu jangan mencet tidak mulu dong, aku jadi salting.</div>
-  </div>
-</section>
-
-<!-- PAGE 7 -->
-<section class="page">
-  <div class="card">
-    <p class="mb-4">Terima kasih sudah sampai sejauh ini.</p>
-    <p class="mb-8">Jawaban kamu, apa pun itu, tetap aku hargai.</p>
-    <a href="https://wa.me/6281994446111?text=Aku%20udah%20baca%20semuanya.%20Kita%20boleh%20ngobrol%20pelan-pelan." class="btn inline-block">
-      Lanjut ke sini yaaaaa
+    <a
+      href="https://wa.me/6281994446111?text=Aku%20jawab%20IYA.%20Aku%20mau%20jalanin%20ini%20pelan-pelan%2C%20tapi%20serius%20sama%20kamu%20%F0%9F%A4%8D"
+      class="btn inline-block"
+    >
+      Lanjut ke WhatsApp
     </a>
   </div>
 </section>
 
 <script>
-const pages=document.querySelectorAll('.page');
+const scenes=document.querySelectorAll('.scene');
 let index=0;
-const no=document.getElementById('no');
-const note=document.getElementById('note');
-const spotify=document.getElementById('spotify');
-let dodge=0;
 
 function next(){
-  pages[index].classList.remove('active');
-  index++;
-  pages[index].classList.add('active');
+  scenes[index].classList.remove('active');
+  index=Math.min(index+1,scenes.length-1);
+  scenes[index].classList.add('active');
 }
 
-function playMusic(){
-  // Fokus ke player supaya bisa langsung dipencet
-  spotify.scrollIntoView({behavior:'smooth', block:'center'});
+function yes(){
+  next();
 }
-
-no.onclick=()=>{
-  dodge++;
-  note.classList.add('show');
-  note.innerHTML = dodge<3
-    ? 'Hey, kamu jangan mencet tidak mulu dong, aku jadi salting.'
-    : 'Jangan ngejar-ngejar tidak mulu, aku beneran salting.';
-  no.style.transform=`translate(${Math.random()*80-40}px,${Math.random()*60-30}px)`;
-  if(dodge>=3){
-    no.innerText='Iya';
-    no.classList.remove('secondary');
-    no.onclick=next;
-  }
-};
 </script>
+
 </body>
 </html>
