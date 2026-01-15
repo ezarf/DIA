@@ -7,201 +7,192 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body {
-  background: radial-gradient(circle at top, #020617, #000);
-  overflow: hidden;
-  transition: background .6s;
+body{
+  background: radial-gradient(circle at top,#ff9ad5,#0f172a);
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
 }
-.day {
-  background: linear-gradient(135deg,#fde68a,#f472b6);
+.glass{
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.3);
 }
-.grid {
-  position: fixed; inset: 0;
-  background:
-    linear-gradient(transparent 96%, rgba(255,105,180,.12)),
-    linear-gradient(90deg, transparent 96%, rgba(0,255,255,.12));
-  background-size: 60px 60px;
-  animation: move 25s linear infinite;
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-15px)}}
+.fade{animation:fade .8s ease forwards}
+@keyframes fade{from{opacity:0;transform:scale(.9)}to{opacity:1}}
+.heart-bg{
+  position:fixed;
+  font-size:22px;
+  animation:up linear forwards;
 }
-@keyframes move {
-  from { background-position: 0 0; }
-  to { background-position: 600px 600px; }
-}
-.glass {
-  background: rgba(255,255,255,.08);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255,255,255,.18);
-}
-.glow { box-shadow: 0 0 35px rgba(236,72,153,.8); }
-.float { animation: float 6s ease-in-out infinite; }
-@keyframes float { 50% { transform: translateY(-16px); } }
-.pop { animation: pop .4s ease; }
-@keyframes pop { 50% { transform: scale(1.25); } }
-.confetti {
-  position: fixed; width: 6px; height: 6px;
-  animation: fall 3s linear forwards;
-}
-@keyframes fall {
-  from { transform: translateY(-10vh) rotate(0); opacity:1 }
-  to { transform: translateY(110vh) rotate(720deg); opacity:0 }
+@keyframes up{
+  from{transform:translateY(100vh);opacity:1}
+  to{transform:translateY(-10vh);opacity:0}
 }
 </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center text-white relative">
 
-<div class="grid"></div>
-
-<!-- TOGGLE -->
-<button id="mode"
- class="absolute top-4 right-4 px-4 py-2 rounded-full glass text-sm">
- Mode ☀️ / 🌙
-</button>
-
 <!-- MINI GAME -->
-<div id="game"
- class="glass rounded-3xl p-8 text-center max-w-md w-full z-10">
-  <h1 class="text-2xl font-bold mb-4">Mini Game 😆</h1>
-  <p class="text-gray-300 mb-6">
-    Klik hati ini 3 kali dulu ya…
+<div id="game" class="glass p-8 rounded-3xl text-center max-w-md fade">
+  <h1 class="text-2xl font-bold mb-3">Hai R’syh 💕</h1>
+  <p class="mb-4 text-gray-200">
+    Tangkap 💖 ini 3x ya…<br>
+    jangan curang 😆
   </p>
-  <button id="heart"
-   class="text-5xl transition hover:scale-125">💖</button>
+  <button id="love"
+   class="text-6xl absolute hover:scale-125 transition">
+   💖
+  </button>
 </div>
 
-<!-- CARD -->
-<div id="card"
- class="hidden glass rounded-3xl p-8 text-center max-w-md w-full float z-10">
-  <h1 class="text-3xl font-bold mb-3">
-    Hai <span class="text-pink-400">R’syh</span> 💕
-  </h1>
-
-  <p id="text" class="text-gray-300 mb-5">
-    Setelah main bentar… aku mau jujur.
+<!-- MAIN CARD -->
+<div id="card" class="hidden glass p-8 rounded-3xl text-center max-w-md float fade">
+  <h2 class="text-3xl font-bold mb-2">R’syh 💗</h2>
+  <p class="text-gray-200 mb-5">
+    Aku mungkin nggak sempurna,  
+    tapi aku tulus dan mau berjuang sama kamu.
   </p>
 
-  <!-- Spotify Taylor Swift -->
-  <iframe
-    class="rounded-xl mb-6 mx-auto"
-    src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
-    width="100%" height="80"
-    allow="autoplay; encrypted-media">
-  </iframe>
+  <audio id="song" loop>
+    <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/7c/cc/da/7cccda65-4f48-02f6-b5c5-4c5c0c62d1c4/mzaf_13477030107353011256.plus.aac.p.m4a">
+  </audio>
 
-  <p class="text-xl font-semibold mb-6">
+  <p class="text-xl font-semibold mb-4">
     Kamu mau jadi pacar aku?
   </p>
 
-  <div class="flex justify-center gap-6">
+  <div class="flex justify-center gap-6 relative">
     <button id="yes"
-      class="px-8 py-3 rounded-full bg-pink-500 glow hover:scale-110 transition">
-      Iya
+     class="px-8 py-3 rounded-full bg-pink-500 hover:scale-110 transition">
+     Iya
     </button>
 
     <button id="no"
-      class="px-8 py-3 rounded-full bg-slate-600 transition relative">
-      Tidak
+     class="px-8 py-3 rounded-full bg-slate-600 relative">
+     Tidak
     </button>
   </div>
+
+  <p id="saltingText"
+   class="mt-4 text-pink-200 text-sm opacity-0 transition">
+   Kalau kamu ngejar-ngejar tombol “Tidak” ini,
+   aku jadi salting 😳💗
+  </p>
+</div>
+
+<!-- SECRET -->
+<div id="secret"
+ class="hidden glass p-8 rounded-3xl text-center max-w-md fade">
+  <h3 class="text-2xl font-bold text-pink-300 mb-3">
+    Pesan Rahasia 💌
+  </h3>
+  <p class="text-gray-200">
+    Aku nggak mau cuma jadi singgah.  
+    Aku mau jadi rumah.  
+    Aku janji jaga perasaan kamu.
+  </p>
 </div>
 
 <!-- FINAL -->
 <div id="final"
- class="hidden absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-20">
-  <h2 class="text-4xl font-bold text-pink-400 mb-4">
-    Makasih ya… 💖
+ class="hidden absolute inset-0 flex flex-col items-center justify-center text-center px-6 fade">
+  <h2 class="text-4xl font-bold text-pink-300 mb-4">
+    Aku bahagia banget 💖
   </h2>
-  <p class="text-gray-300 max-w-md mb-6">
-    Aku janji bukan cuma datang bawa rasa,
-    tapi juga usaha, perhatian, dan waktu.
+  <p class="mb-6 text-gray-200 max-w-md">
+    Mulai hari ini…  
+    aku janji nggak main-main sama perasaan kamu.
   </p>
-
-  <!-- WhatsApp -->
   <a id="wa"
-   class="px-6 py-3 rounded-full bg-green-500 text-white font-semibold hover:scale-105 transition">
-   Kirim Jawaban ke WhatsApp 💬
+   class="px-6 py-3 rounded-full bg-green-500 font-semibold hover:scale-105 transition">
+   Kirim ke WhatsApp 💬
   </a>
 </div>
 
 <script>
-const body = document.body;
-const mode = document.getElementById("mode");
-const heart = document.getElementById("heart");
-const game = document.getElementById("game");
-const card = document.getElementById("card");
-const final = document.getElementById("final");
-const no = document.getElementById("no");
-const yes = document.getElementById("yes");
-const text = document.getElementById("text");
-const wa = document.getElementById("wa");
+const love=document.getElementById("love");
+const game=document.getElementById("game");
+const card=document.getElementById("card");
+const song=document.getElementById("song");
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+const secret=document.getElementById("secret");
+const final=document.getElementById("final");
+const wa=document.getElementById("wa");
+const saltingText=document.getElementById("saltingText");
 
-let clickHeart = 0;
-let step = 0;
-let day = false;
+let score=0;
+let kaburLevel=0;
 
-mode.onclick = () => {
-  day = !day;
-  body.classList.toggle("day");
-};
-
-heart.onclick = () => {
-  clickHeart++;
-  heart.classList.add("pop");
-  setTimeout(()=>heart.classList.remove("pop"),200);
-  if (clickHeart === 3) {
+// MINI GAME
+moveLove();
+love.onclick=()=>{
+  score++;
+  if(score>=3){
     game.classList.add("hidden");
     card.classList.remove("hidden");
-  }
+    song.play();
+    hearts();
+  }else moveLove();
 };
-
-no.addEventListener("mouseenter", () => {
-  no.style.transform =
-    `translate(${Math.random()*140-70}px, ${Math.random()*90-45}px)`;
-});
-
-no.onclick = () => {
-  if (step === 0) {
-    text.innerText = "Eh kok kamu ngejar 😳";
-    step++;
-  } else if (step === 1) {
-    text.innerText = "Aku jadi salting tau…";
-    step++;
-  } else {
-    no.innerText = "Iya";
-    no.classList.add("bg-pink-500","glow","pop");
-    confetti(25);
-  }
-};
-
-yes.onclick = finish;
-no.ondblclick = finish;
-
-function finish() {
-  card.classList.add("opacity-0","scale-95");
-  setTimeout(()=>{
-    card.classList.add("hidden");
-    final.classList.remove("hidden");
-    confetti(60);
-
-    const msg =
-      "Aku jawab IYA 💖\n" +
-      "Aku mau jadi pacar kamu.\n\n" +
-      "— R’syh";
-    wa.href =
-      "https://wa.me/6281994446111?text=" +
-      encodeURIComponent(msg);
-  },500);
+function moveLove(){
+  love.style.left=Math.random()*70+"%";
+  love.style.top=Math.random()*70+"%";
 }
 
-function confetti(n) {
-  for (let i=0;i<n;i++) {
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3500);
+// TOMBOL TIDAK KABUR
+function kabur(){
+  kaburLevel++;
+  saltingText.style.opacity=1;
+
+  const x=Math.random()*(180+kaburLevel*20)-90;
+  const y=Math.random()*(120+kaburLevel*15)-60;
+
+  no.style.transition="transform .2s ease";
+  no.style.transform=`translate(${x}px,${y}px) rotate(${kaburLevel*6}deg)`;
+
+  if(kaburLevel>=5){
+    no.innerText="Iya 😳";
+    no.classList.remove("bg-slate-600");
+    no.classList.add("bg-pink-500");
   }
+}
+no.addEventListener("mouseenter",kabur);
+no.addEventListener("click",kabur);
+
+// YES FLOW
+yes.onclick=()=>{
+  card.classList.add("hidden");
+  secret.classList.remove("hidden");
+
+  setTimeout(()=>{
+    secret.classList.add("hidden");
+    final.classList.remove("hidden");
+  },4000);
+
+  const msg=
+`Aku jawab IYA 💖
+Aku mau jadi pacar kamu.
+Aku percaya sama kamu.
+
+— R’syh`;
+  wa.href="https://wa.me/62819994446111?text="+encodeURIComponent(msg);
+};
+
+// LOVE BACKGROUND
+function hearts(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart-bg";
+    h.innerText=["💖","💕","💗"][Math.floor(Math.random()*3)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=3+Math.random()*3+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },300);
 }
 </script>
 
