@@ -1,206 +1,262 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untuk Kamu 🤍</title>
-
+<meta charset="UTF-8" />
+<title>Untuk R’syh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body { font-family: 'Inter', sans-serif; }
-.font-serif { font-family: 'Playfair Display', serif; }
-
-@keyframes gradientMove {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+:root{
+  --pink-main:#ec4899;
+  --ease-smooth:cubic-bezier(.4,0,.2,1);
 }
 
-.word {
-  opacity: 0;
-  display: inline-block;
+/* ===== BASE ===== */
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui;
+  background:#fde7f3;
+  overflow:hidden;
 }
+
+/* ===== CINEMATIC BACKGROUND ===== */
+.bg{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(40% 30% at 20% 20%, #ffd6e8, transparent),
+    radial-gradient(40% 30% at 80% 30%, #ffeaf4, transparent),
+    linear-gradient(180deg,#fde2ef,#fff);
+  animation:bgShift 20s ease-in-out infinite alternate;
+  z-index:-3;
+}
+@keyframes bgShift{
+  to{filter:hue-rotate(10deg)}
+}
+
+/* ===== FLOATING HEARTS ===== */
+.heart{
+  position:fixed;
+  font-size:48px;
+  opacity:.12;
+  animation:floatUp 18s linear infinite;
+  pointer-events:none;
+}
+@keyframes floatUp{
+  from{transform:translateY(110vh) scale(.8)}
+  to{transform:translateY(-20vh) scale(1.3)}
+}
+
+/* ===== GLASS ===== */
+.glass{
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(30px);
+  border-radius:32px;
+  box-shadow:0 40px 100px rgba(0,0,0,.12);
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-up{
+  opacity:0;
+  transform:translateY(20px);
+  animation:fadeUp .9s var(--ease-smooth) forwards;
+}
+@keyframes fadeUp{
+  to{opacity:1;transform:none}
+}
+
+.scale-in{
+  opacity:0;
+  transform:scale(.95);
+  animation:scaleIn .8s var(--ease-smooth) forwards;
+}
+@keyframes scaleIn{
+  to{opacity:1;transform:scale(1)}
+}
+
+/* ===== BUTTON ===== */
+.btn{
+  padding:14px 42px;
+  border-radius:999px;
+  font-weight:600;
+  transition:transform .3s var(--ease-smooth);
+}
+.btn:active{transform:scale(.94)}
+.btn-yes{background:var(--pink-main);color:#fff}
+.btn-no{background:#9ca3af;color:#fff;position:relative}
 </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-pink-200 via-pink-100 to-rose-200 bg-[length:400%_400%] animate-[gradientMove_18s_ease_infinite] overflow-hidden">
+<body class="flex items-center justify-center min-h-screen">
 
-<div class="flex items-center justify-center min-h-screen px-4">
+<div class="bg"></div>
 
-<div class="w-full max-w-md bg-white/90 backdrop-blur-xl rounded-3xl p-8 text-center shadow-[0_40px_140px_rgba(0,0,0,.2)]">
-
-<div id="content" class="space-y-10">
-
-<!-- ================= 0. GAME ================= -->
-<div id="game" class="space-y-5">
-  <h2 class="font-serif text-2xl text-pink-600">
-    Game kecil dulu 🎮
-  </h2>
-  <p class="text-gray-700">
-    Sejujurnya… kamu ngerasa aku itu orangnya gimana?
-  </p>
-
-  <div class="space-y-3">
-    <button onclick="finishGame('Hehe, aku senyum bacanya 🤍')"
-      class="w-full border rounded-xl p-4 hover:bg-pink-50 transition">
-      😌 Bikin nyaman tanpa sadar
-    </button>
-    <button onclick="finishGame('Nah ini bahaya… aku salting 😳')"
-      class="w-full border rounded-xl p-4 hover:bg-pink-50 transition">
-      🥰 Bikin kepikiran
-    </button>
-    <button onclick="finishGame('Aku ketawa sendiri bacanya 😅')"
-      class="w-full border rounded-xl p-4 hover:bg-pink-50 transition">
-      🤍 Bikin aman dan nyaman 
-    </button>
-  </div>
-
-  <p id="gameResult" class="text-pink-400 opacity-0"></p>
-</div>
-
-<!-- ================= 1. OPENING ================= -->
-<div id="opening" class="hidden space-y-4 text-gray-700 font-serif text-lg">
-  <p class="animated-text">Aku nggak nyari yang sempurna.</p>
-  <p class="animated-text">Aku cuma mau yang saling jaga.</p>
-  <p class="animated-text italic">Dan jujur…</p>
-</div>
-
-<!-- ================= 2. SONG PICK ================= -->
-<div id="songSection" class="hidden space-y-4">
-  <p class="font-serif text-lg text-gray-700">
-    Pilih lagu yang paling kamu enak banget 🎶
-  </p>
-
-  <div class="song border rounded-xl p-4 hover:bg-pink-50 transition"
-    data-title="Lover — Taylor Swift"
-    data-src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI">
-    Lover — Taylor Swift
-  </div>
-
-  <div class="song border rounded-xl p-4 hover:bg-pink-50 transition"
-    data-title="Begin Again — Taylor Swift"
-    data-src="https://open.spotify.com/embed/track/3n9mzjgAzjyK3M0nUq4QfC">
-    Begin Again — Taylor Swift
-  </div>
-
-  <div class="song border rounded-xl p-4 hover:bg-pink-50 transition"
-    data-title="You Belong With Me — Taylor Swift"
-    data-src="https://open.spotify.com/embed/track/6M2wZ9GZgrQXHCFfjv46we">
-    You Belong With Me — Taylor Swift
-  </div>
-
-  <div id="player" class="hidden mt-4"></div>
-</div>
-
-<!-- ================= 3. CONFESSION ================= -->
-<div id="question" class="hidden text-center space-y-6">
-  <h2 class="font-serif text-2xl text-pink-600">
-    Kamu mau jadi pacar aku?
-  </h2>
-  <button id="yesBtn"
-    class="px-10 py-3 rounded-full bg-gradient-to-r from-pink-500 to-rose-400 text-white shadow-lg">
-    Iya 🤍
-  </button>
-</div>
-
-<!-- ================= 4. MESSAGES ================= -->
-<div id="messages" class="hidden space-y-4 font-serif text-lg text-gray-700">
-  <p class="animated-text">Aku selalu ada buat kamu.</p>
-  <p class="animated-text">Aku nggak bakal ninggalin kamu.</p>
-  <p class="animated-text">Aku setia, dan aku serius.</p>
-  <p class="animated-text">Aku mau kita sama-sama excited.</p>
-  <p class="animated-text">Sama-sama belajar.</p>
-  <p class="animated-text italic">Dan sama-sama saling menjaga.</p>
-</div>
-
-<!-- ================= 5. WHATSAPP ================= -->
-<div id="sendWA" class="hidden">
-  <button onclick="sendWA()"
-    class="w-full rounded-full bg-gradient-to-r from-pink-500 to-rose-400 py-3 text-white shadow-lg">
-    Kirim Jawaban ke WhatsApp ya sayangg 💌
-  </button>
-</div>
-
-</div>
-</div>
-</div>
-
+<!-- Hearts -->
 <script>
-let selectedSong = '';
-
-function animateText(scope){
-  scope.querySelectorAll('.animated-text').forEach(p=>{
-    const words = p.innerText.split(' ');
-    p.innerHTML='';
-    words.forEach(w=>{
-      const span=document.createElement('span');
-      span.className='word mr-1';
-      span.innerText=w;
-      p.appendChild(span);
-    });
-    gsap.to(p.children,{
-      opacity:1,
-      stagger:.12,
-      duration:.6,
-      ease:'power2.out'
-    });
-  });
-}
-
-/* GAME */
-function finishGame(text){
-  const res=document.getElementById('gameResult');
-  res.innerText=text;
-  res.style.opacity=1;
-
-  setTimeout(()=>{
-    document.getElementById('game').classList.add('hidden');
-    document.getElementById('opening').classList.remove('hidden');
-    animateText(document.getElementById('opening'));
-
-    setTimeout(()=>{
-      document.getElementById('songSection').classList.remove('hidden');
-    },1500);
-  },1200);
-}
-
-/* SONG */
-document.querySelectorAll('.song').forEach(el=>{
-  el.onclick=()=>{
-    document.querySelectorAll('.song').forEach(s=>s.classList.remove('border-pink-500'));
-    el.classList.add('border-pink-500');
-    selectedSong=el.dataset.title;
-
-    const player=document.getElementById('player');
-    player.classList.remove('hidden');
-    player.innerHTML=`<iframe class="rounded-xl" src="${el.dataset.src}" width="100%" height="80"></iframe>`;
-
-    document.getElementById('question').classList.remove('hidden');
-  };
-});
-
-/* YES */
-document.getElementById('yesBtn').onclick=()=>{
-  confetti({particleCount:120,spread:90});
-  document.getElementById('messages').classList.remove('hidden');
-  animateText(document.getElementById('messages'));
-
-  setTimeout(()=>{
-    document.getElementById('sendWA').classList.remove('hidden');
-  },1200);
-};
-
-/* WA */
-function sendWA(){
-  const msg=`Jawaban aku: IYA 🤍\nLagu kita: ${selectedSong}`;
-  window.open(`https://wa.me/6281994446111?text=${encodeURIComponent(msg)}`);
+for(let i=0;i<16;i++){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDelay=Math.random()*18+"s";
+  document.body.appendChild(h);
 }
 </script>
 
-</body>
-</html>
+<!-- TAP -->
+<div id="tap"
+ class="fixed inset-0 flex items-center justify-center bg-white/90 backdrop-blur z-50">
+ <p class="text-pink-500 text-lg animate-pulse">Tap sekali ya 💕</p>
+</div>
+
+<!-- CARD -->
+<div id="card"
+ class="glass p-8 max-w-sm w-full text-center scale-in">
+
+  <h1 class="text-3xl font-bold text-pink-500 mb-4 fade-up"
+      style="animation-delay:.2s">
+    Hai R’syh
+  </h1>
+
+  <p class="text-gray-600 mb-6 fade-up"
+     style="animation-delay:.6s">
+    Aku nggak jago ngomong indah, tapi satu hal pasti…
+  </p>
+
+  <iframe id="spotify"
+    class="rounded-xl mb-6 opacity-0 transition"
+    src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
+    width="100%" height="80"
+    allow="autoplay; encrypted-media">
+  </iframe>
+
+  <p class="text-lg font-semibold text-gray-700 mb-6 fade-up"
+     style="animation-delay:1s">
+    Kamu mau jadi pacar aku?
+  </p>
+
+  <div class="flex justify-center gap-6 relative">
+    <button id="yes" class="btn btn-yes">Iya</button>
+    <button id="no" class="btn btn-no">Tidak</button>
+  </div>
+
+  <p id="hint"
+     class="text-sm text-pink-400 mt-4 opacity-0 transition">
+    Kok kamu ngejar sih 😳
+  </p>
+</div>
+
+<!-- END -->
+<div id="ending"
+ class="hidden fixed inset-0 flex items-center justify-center px-6">
+ <div class="glass p-8 max-w-md text-center scale-in">
+   <p id="e1" class="mb-4"></p>
+   <p id="e2" class="mb-4"></p>
+   <p id="e3" class="font-medium mb-8"></p>
+   <a id="wa" class="btn btn-yes opacity-0 transition">Lanjut ke WhatsApp</a>
+ </div>
+</div>
+
+<script>
+/* ================= ELEMENT ================= */
+const tap = document.getElementById("tap");
+const spotify = document.getElementById("spotify");
+const story = document.getElementById("story");
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const hint = document.getElementById("hint");
+const card = document.getElementById("card");
+const ending = document.getElementById("ending");
+
+const e1 = document.getElementById("e1");
+const e2 = document.getElementById("e2");
+const e3 = document.getElementById("e3");
+const wa = document.getElementById("wa");
+
+/* ================= OPENING ================= */
+tap.onclick = () => {
+  spotify.src += "?autoplay=1";
+  spotify.style.opacity = 1;
+  tap.remove();
+  startTimeline();
+};
+
+/* ================= EMOTIONAL TIMELINE ================= */
+function startTimeline(){
+  setTimeout(()=>story.innerText =
+    "Aku nggak tau kapan tepatnya, tapi sejak kenal kamu, hal-hal kecil jadi terasa lebih tenang."
+  ,4000);
+
+  setTimeout(()=>story.innerText =
+    "Lucunya… kamu nggak berusaha apa-apa. Tapi aku betah."
+  ,9000);
+
+  setTimeout(()=>story.innerText =
+    "Kalau suatu hari kamu capek sama dunia, aku pengen jadi orang yang kamu cari tanpa sadar."
+  ,16000);
+
+  setTimeout(()=>story.innerText =
+    "Jadi… kalau aku minta kesempatan buat jagain kamu pelan-pelan, kamu mau?"
+  ,24000);
+}
+
+/* ================= IDLE EASTER EGG ================= */
+let idleTimer = setTimeout(()=>{
+  hint.innerText = "Kamu mikir lama ya… tenang, aku nggak ke mana-mana.";
+  hint.style.opacity = 1;
+},12000);
+
+document.body.onclick = ()=>{
+  clearTimeout(idleTimer);
+};
+
+/* ================= BUTTON TIDAK PSIKOLOGIS ================= */
+let chase = 0, x = 0, y = 0;
+const hints = [
+  "Hei…",
+  "Kok kamu ngejar sih 😳",
+  "Kalau gini terus aku salah tingkah…",
+  "Yaudah… aku ngalah."
+];
+
+function evade(){
+  chase++;
+  hint.innerText = hints[Math.min(chase-1, hints.length-1)];
+  hint.style.opacity = 1;
+
+  x = Math.max(-90, Math.min(90, x + (Math.random()*100 - 50)));
+  y = Math.max(-60, Math.min(60, y + (Math.random()*80 - 40)));
+  no.style.transform = `translate(${x}px,${y}px)`;
+
+  if(chase >= 4){
+    no.innerText = "Iya";
+    no.className = "btn btn-yes";
+  }
+}
+
+no.onclick = evade;
+no.ontouchstart = evade;
+
+/* ================= YES CLICK – CINEMATIC END ================= */
+yes.onclick = ()=>{
+  card.classList.add("opacity-0");
+  setTimeout(()=>{
+    card.classList.add("hidden");
+    ending.classList.remove("hidden");
+
+    setTimeout(()=>e1.innerText = "Aku nggak nyari yang sempurna.",600);
+    setTimeout(()=>e2.innerText = "Aku cuma mau yang mau tumbuh bareng.",2200);
+    setTimeout(()=>e3.innerText = "Dan hari ini, aku milih kamu.",3800);
+
+    setTimeout(()=>{
+      wa.style.opacity = 1;
+      wa.href =
+        "https://wa.me/6281994446111?text=" +
+        encodeURIComponent(
+          "Aku jawab IYA. Aku mau jalanin ini pelan-pelan, tapi serius sama kamu 🤍"
+        );
+    },5200);
+  },600);
+};
+</script>
