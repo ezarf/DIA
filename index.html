@@ -17,17 +17,19 @@ body{
   font-family:ui-sans-serif,system-ui;
   background:#0b0612;
   overflow:hidden;
+  color:white;
 }
 
 /* BACKGROUND */
 .bg{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:
     radial-gradient(40% 30% at 20% 20%, #3b1023, transparent),
     radial-gradient(40% 30% at 80% 30%, #1c0f1a, transparent),
     linear-gradient(180deg,#05010a,#120815);
   animation:bg 20s ease-in-out infinite alternate;
-  z-index:-3;
+  z-index:-10;
 }
 @keyframes bg{to{filter:hue-rotate(8deg)}}
 
@@ -46,6 +48,8 @@ body{
 
 /* GLASS */
 .glass{
+  position:relative;
+  z-index:20;
   background:rgba(255,255,255,.12);
   backdrop-filter:blur(30px);
   border-radius:32px;
@@ -77,21 +81,14 @@ body{
 .btn:active{transform:scale(.94)}
 .btn-yes{background:var(--pink);color:#fff}
 .btn-no{background:#6b7280;color:#fff;position:relative}
-
-/* HEARTBEAT */
-@keyframes beat{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.05)}
-}
-.beat{animation:beat 2s ease-in-out infinite}
 </style>
 </head>
 
-<body class="flex items-center justify-center min-h-screen text-white">
+<body class="flex items-center justify-center min-h-screen">
 
 <div class="bg"></div>
 
-<!-- floating hearts -->
+<!-- HEARTS -->
 <script>
 for(let i=0;i<18;i++){
   const h=document.createElement("div");
@@ -103,15 +100,8 @@ for(let i=0;i<18;i++){
 }
 </script>
 
-<!-- TAP -->
-<div id="tap"
- class="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur z-50">
- <p class="text-pink-400 text-lg animate-pulse">Tap sekali ya 💗</p>
-</div>
-
 <!-- CARD -->
-<div id="card"
- class="glass p-8 max-w-sm w-full text-center scale beat">
+<div id="card" class="glass p-8 max-w-sm w-full text-center scale">
 
 <h1 class="text-3xl font-bold text-pink-400 mb-4 fade"
  style="animation-delay:.2s">
@@ -122,10 +112,11 @@ for(let i=0;i<18;i++){
  class="text-gray-200 mb-6 min-h-[88px] transition-opacity duration-700"></p>
 
 <iframe id="spotify"
- class="rounded-xl mb-6 opacity-0 transition"
+ loading="lazy"
+ class="rounded-xl mb-6 opacity-100 transition"
  src="https://open.spotify.com/embed/track/1dGr1c8CrMLDpV6mPbImSI"
  width="100%" height="80"
- allow="autoplay; encrypted-media"></iframe>
+ allow="encrypted-media"></iframe>
 
 <p class="text-lg font-semibold text-gray-100 mb-6 fade"
  style="animation-delay:1s">
@@ -151,7 +142,6 @@ for(let i=0;i<18;i++){
   <p id="e1" class="mb-4"></p>
   <p id="e2" class="mb-4"></p>
   <p id="e3" class="mb-6 font-medium"></p>
-  <p id="secret" class="text-sm text-pink-300 opacity-0 mb-6"></p>
   <a id="wa" class="btn btn-yes opacity-0 transition">
    Lanjut ke WhatsApp
   </a>
@@ -159,8 +149,6 @@ for(let i=0;i<18;i++){
 </div>
 
 <script>
-const tap=document.getElementById("tap");
-const spotify=document.getElementById("spotify");
 const story=document.getElementById("story");
 const hint=document.getElementById("hint");
 const yes=document.getElementById("yes");
@@ -171,22 +159,13 @@ const ending=document.getElementById("ending");
 const e1=document.getElementById("e1");
 const e2=document.getElementById("e2");
 const e3=document.getElementById("e3");
-const secret=document.getElementById("secret");
 const wa=document.getElementById("wa");
 
-/* OPEN */
-tap.onclick=()=>{
- spotify.src+="?autoplay=1";
- spotify.style.opacity=1;
- tap.remove();
- timeline();
-};
-
 /* TIMELINE */
-function timeline(){
+window.onload=()=>{
  setTimeout(()=>story.innerText=
  "Aku nggak tau kapan tepatnya, tapi sejak kenal kamu, dunia rasanya lebih pelan."
- ,4000);
+ ,3000);
 
  setTimeout(()=>story.innerText=
  "Kamu nggak berusaha bikin aku nyaman… tapi entah kenapa aku nyaman."
@@ -195,19 +174,7 @@ function timeline(){
  setTimeout(()=>story.innerText=
  "Kalau suatu hari kamu capek sama dunia, aku pengen jadi tempat kamu pulang."
  ,16000);
-
- setTimeout(()=>story.innerText=
- "Aku nggak maksa. Aku cuma jujur."
- ,23000);
-}
-
-/* IDLE SALTING */
-let idle=setTimeout(()=>{
- hint.innerText="Kamu mikir lama ya… aku di sini kok."
- hint.style.opacity=1;
-},12000);
-
-document.body.onclick=()=>clearTimeout(idle);
+};
 
 /* NO BUTTON */
 let chase=0,x=0,y=0;
@@ -245,17 +212,12 @@ yes.onclick=()=>{
   setTimeout(()=>e3.innerText="Dan hari ini, aku milih kamu.",3800);
 
   setTimeout(()=>{
-   secret.innerText="Terima kasih sudah bikin aku berani jujur 🤍";
-   secret.style.opacity=1;
-  },4800);
-
-  setTimeout(()=>{
    wa.style.opacity=1;
    wa.href="https://wa.me/6281994446111?text="+
     encodeURIComponent(
      "Aku jawab IYA. Aku mau jalanin ini pelan-pelan, tapi serius sama kamu 🤍"
     );
-  },6000);
+  },5200);
  },600);
 };
 </script>
